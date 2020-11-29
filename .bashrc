@@ -23,10 +23,10 @@ get() {
 	res=`tput sgr0`
 
 	 #assign all matches
-	OUT=$(sudo grep -oP "$*\K.*" /home/desjardins/permanent/bash/.pw.conf)
+	OUT=$(sudo grep -oP "$*\K.*" /home/desjardins/permanent/private/bash/.pw.conf)
 	 
 	 #copy text to clipboard
-	sudo grep -oP "$*\K.*" /home/desjardins/permanent/bash/.pw.conf | xclip -selection clipboard
+	sudo grep -oP "$*\K.*" /home/desjardins/permanent/private/bash/.pw.conf | xclip -selection clipboard
 	 
 	 #print output
 	echo "copied ${b}${#OUT} char(s)${res} long password to clipboard for parameter(s) ${b}$*${res}"
@@ -66,7 +66,7 @@ clone() {
 }
 
 dllist() {
-	bash /home/desjardins/permanent/bash/getUrl.sh "$1" && youtube-dl -a "$1"
+	bash /home/desjardins/permanent/public/bash/getUrl.sh "$1" && youtube-dl -a "$1"
 }
 
 # OS - stuff
@@ -79,11 +79,11 @@ alias sync='sync & watch -n 1 grep -e Dirty: /proc/meminfo'
 alias syncstate='watch -d grep -e Dirty: -e Writeback: /proc/meminfo'
 
 # exported scripts
-alias burn='sudo bash /home/desjardins/permanent/bash/burn.sh'
-alias lsalias='/home/desjardins/permanent/bash/lsalias.sh'
-alias lsec='sudo bash /home/desjardins/permanent/bash/.lsec.sh'
-alias topdf='/home/desjardins/permanent/bash/topdf.sh'
-alias fixdiscord='/home/desjardins/permanent/bash/Mon2Cam.sh'
+alias burn='sudo bash /home/desjardins/permanent/public/bash/burn.sh'
+alias lsalias='/home/desjardins/permanent/public/bash/lsalias.sh'
+alias lsec='sudo bash /home/desjardins/permanent/private/bash/.lsec.sh'
+alias topdf='/home/desjardins/permanent/public/bash/topdf.sh'
+alias fixdiscord='/home/desjardins/permanent/public/bash/Mon2Cam.sh'
 
 # IOS
 alias ios-pair='idevicepair pair'
