@@ -6,11 +6,6 @@
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
-# printCharNTimes() {
-# 	n=$2
-# 	printf "%0.s*" {1.."$n"}
-# }
-
 getSurvey() {
 	curl https://europe-west1-semi-umfrage.cloudfunctions.net/api/getEntries1 > data.json && prettier -w data.json
 	less data.json
