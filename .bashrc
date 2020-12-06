@@ -6,6 +6,11 @@
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
+# printCharNTimes() {
+# 	n=$2
+# 	printf "%0.s*" {1.."$n"}
+# }
+
 getSurvey() {
 	curl https://europe-west1-semi-umfrage.cloudfunctions.net/api/getEntries1 > data.json && prettier -w data.json
 	less data.json
@@ -27,9 +32,7 @@ get() {
 	echo "copied ${b}${#OUT} char(s)${res} long password to clipboard for parameter(s) ${b}$*${res}"
 }
 
-twitch() {
-	mpv https://www.twitch.tv/$1
-}
+twitch() { mpv https://www.twitch.tv/$1; }
 
 execnode() {
 	 #add eval to js file
@@ -45,24 +48,18 @@ execnode() {
 combineTextInFolder() {
 	$(rm -f combined.json)
 	files=$(ls *.txt)
-	$(cat begin.json $files end.json > combined.json)
+	$(cat begin.json $files end.json > combined.json) 
 }
 
-pngpdf() {
-	for file in "$@"; do $(convert "$file" "${file:0:${#file}-4}.pdf"); done
-}
+pngpdf() { for file in "$@"; do $(convert "$file" "${file:0:${#file}-4}.pdf"); done; }
 
-convertvid() {
-	for file in "$@"; do $(ffmpeg -i "$file" "${file:0:${#file}-4}.mp3"); done
-}
+convertvid() { for file in "$@"; do $(ffmpeg -i "$file" "${file:0:${#file}-4}.mp3"); done; }
 
-clone() {
-	git clone https://github.com/"$1".git
-}
+# clone() {
+# 	git clone https://github.com/"$1".git
+# }
 
-dllist() {
-	bash /home/desjardins/permanent/public/bash/getUrl.sh "$1" && youtube-dl -a "$1"
-}
+dllist() { bash /home/desjardins/permanent/public/bash/getUrl.sh "$1" && youtube-dl -a "$1"; }
 
 # OS - stuff
 alias generatePackageList='pacman -Qe | awk "{print $1}" > package_list.txt'
@@ -102,7 +99,7 @@ alias chill='mpa https://www.youtube.com/watch?v=5qap5aO4i9A'
 alias mpa='mpv --volume=50 --no-video --force-seekable=yes'
 alias minecraft='LC_ALL=C minecraft-launcher'
 alias gofind='sudo find / -name'
-
+function cl() { git clone https://github.com/"$1".git; }
 
 archey3
 
