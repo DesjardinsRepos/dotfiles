@@ -1,4 +1,4 @@
-##
+###
 # ~/.bashrc
 #
 
@@ -60,6 +60,13 @@ convertvid() { for file in "$@"; do $(ffmpeg -i "$file" "${file:0:${#file}-4}.mp
 # }
 
 dllist() { bash /home/desjardins/permanent/public/bash/getUrl.sh "$1" && youtube-dl -a "$1"; }
+
+ytdl-use-name() { 
+	echo "$@" > tmp.ytdl-use-name;  
+	bash /home/desjardins/permanent/public/bash/getUrl.sh tmp.ytdl-use-name;
+	youtube-dl -a tmp.ytdl-use-name;
+	 rm tmp.ytdl-use-name;
+}
 
 # OS - stuff
 alias generatePackageList='pacman -Qe | awk "{print $1}" > package_list.txt'
