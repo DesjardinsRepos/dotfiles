@@ -54,7 +54,7 @@ combineTextInFolder() {
 pngpdf() { for file in "$@"; do $(convert "$file" "${file:0:${#file}-4}.pdf"); done; }
 
 convertvid() { for file in "$@"; do $(ffmpeg -i "$file" "${file:0:${#file}-4}.mp3"); done; }
-
+c
 # clone() {
 # 	git clone https://github.com/"$1".git
 # }
@@ -65,7 +65,7 @@ ytdl-use-name() {
 	echo "$@" > tmp.ytdl-use-name;  
 	bash /home/desjardins/permanent/public/bash/getUrl.sh tmp.ytdl-use-name;
 	youtube-dl -a tmp.ytdl-use-name;
-	 rm tmp.ytdl-use-name;
+	rm tmp.ytdl-use-name;
 }
 
 # OS - stuff
@@ -82,7 +82,8 @@ alias burn='sudo bash /home/desjardins/permanent/public/bash/burn.sh'
 alias lsalias='/home/desjardins/permanent/public/bash/lsalias.sh'
 alias lsec='sudo bash /home/desjardins/permanent/private/bash/.lsec.sh'
 alias topdf='/home/desjardins/permanent/public/bash/topdf.sh'
-alias fixdiscord='/home/desjardins/permanent/public/bash/Mon2Cam.sh'
+alias fixdiscord='/home/desjardins/permanent/public/bash/Mon2Cam'
+alias getUrl='bash /home/desjardins/permanent/public/bash/getUrl.sh "$@"'
 
 # IOS
 alias ios-pair='idevicepair pair'
@@ -106,7 +107,10 @@ alias chill='mpa https://www.youtube.com/watch?v=5qap5aO4i9A'
 alias mpa='mpv --volume=50 --no-video --force-seekable=yes'
 alias minecraft='LC_ALL=C minecraft-launcher'
 alias gofind='sudo find / -name'
-function cl() { git clone https://github.com/"$1".git; }
+alias ytdl-play='echo "$@" > t; bash /home/desjardins/permanent/public/bash/getUrl.sh t'
+#&& mpv $(cat t) && rm t'
+cl() { git clone https://github.com/"$1".git; }
+
 
 archey3
 
