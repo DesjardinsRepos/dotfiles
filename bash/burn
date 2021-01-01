@@ -1,4 +1,9 @@
 #!/bin/bash
 
+# Writes an .iso Diskimage to the specified drive. There arent any checks beforehand, use at your own risk.
+# --------------------------------------------------------------------------------------------------------------
+# Usage: ./burn Diskimage.iso /dev/sdc
+# --------------------------------------------------------------------------------------------------------------
+
 
 dd if="$1" of="$2" bs=1M | sync

@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Makes executing JS with CLI parameters possible. In the file one can get the value of each parameter using 
+# process.argv[n].
+# --------------------------------------------------------------------------------------------------------------
+# Usage: execnode file.js param1 param2
+# --------------------------------------------------------------------------------------------------------------
+
 
 #add eval to js file
 echo "eval(process.argv[2]);" >> $1

@@ -1,6 +1,11 @@
 #!/bin/bash
 
+# Plays a Youtube video by handle using mpv.
+# --------------------------------------------------------------------------------------------------------------
+# Usage: ./ytdl-play Title of the video
+# --------------------------------------------------------------------------------------------------------------
+
 
 echo "$@" > tmp.ytdl-play; 
-bash /home/desjardins/permanent/public/bash/getUrl.sh tmp.ytdl-play;
+~/permanent/public/bash/getUrl tmp.ytdl-play;
 mpv "$(< tmp.ytdl-play)" & rm tmp.ytdl-play;

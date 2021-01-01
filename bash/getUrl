@@ -1,4 +1,9 @@
 #!/bin/bash
 
+# Replaces every line of a file with an URL of the most matching Youtube result.
+# --------------------------------------------------------------------------------------------------------------
+# Usage: ./getUrl file
+# --------------------------------------------------------------------------------------------------------------
+
 
 while IFS= read -r line; do node /home/desjardins/permanent/public/js/index.js "$line"; done < $1 > file.tmp && mv -- file.tmp $1

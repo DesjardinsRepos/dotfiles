@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Downloads entries of the sourvey we did while writing of our skilled work.
+# No parameters required.
+# --------------------------------------------------------------------------------------------------------------
+
 
 curl https://europe-west1-semi-umfrage.cloudfunctions.net/api/getEntries1 > data.json && prettier -w data.json
 less data.json

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Combines the text of all txt files in PWD into combined.json. Not really useful except for on of my usecases.
+# No parameters required.
+# --------------------------------------------------------------------------------------------------------------
+
 
 $(rm -f combined.json)
 files=$(ls *.txt)

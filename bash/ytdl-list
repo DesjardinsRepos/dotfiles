@@ -1,4 +1,10 @@
 #!/bin/bash
 
+# Downloads all Youtube-videos mentioned in a file synchronously. One can either use URLs or the title of the 
+# video. Every line gets interpreted as parameters for one video. Empty lines will get ignored. 
+# --------------------------------------------------------------------------------------------------------------
+# Usage: ./ytdl-list list
+# --------------------------------------------------------------------------------------------------------------
+
 
 ~/permanent/public/bash/getUrl "$1" && youtube-dl -a "$1"; 

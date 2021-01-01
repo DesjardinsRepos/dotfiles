@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Downloads a Youtube video by handle.
+# --------------------------------------------------------------------------------------------------------------
+# Usage: ./ytdl-use-name Title of the video
+# --------------------------------------------------------------------------------------------------------------
+
 
 echo "$@" > tmp.ytdl-use-name;  
 bash /home/desjardins/permanent/public/bash/getUrl.sh tmp.ytdl-use-name;
