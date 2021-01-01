@@ -1,0 +1,6 @@
+#!/bin/bash
+
+
+$(rm -f combined.json)
+files=$(ls *.txt)
+$(cat begin.json $files end.json > combined.json) 

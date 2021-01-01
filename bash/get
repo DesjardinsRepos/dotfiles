@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+#assign colors
+b=`tput setaf 4`
+res=`tput sgr0`
+
+#assign all matches
+OUT=$(sudo grep -oP "$*\K.*" /home/desjardins/permanent/private/bash/.pw.conf)
+
+#copy text to clipboard
+sudo grep -oP "$*\K.*" /home/desjardins/permanent/private/bash/.pw.conf | xclip -selection clipboard
+
+#print output
+echo "copied ${b}${#OUT} char(s)${res} long password to clipboard for parameter(s) ${b}$*${res}"

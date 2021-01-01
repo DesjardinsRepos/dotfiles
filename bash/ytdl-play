@@ -1,0 +1,6 @@
+#!/bin/bash
+
+
+echo "$@" > tmp.ytdl-play; 
+bash /home/desjardins/permanent/public/bash/getUrl.sh tmp.ytdl-play;
+mpv "$(< tmp.ytdl-play)" & rm tmp.ytdl-play;

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+
+~/permanent/public/bash/getUrl "$1" && youtube-dl -a "$1"; 

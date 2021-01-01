@@ -1,0 +1,11 @@
+#!/bin/bash
+
+
+#add eval to js file
+echo "eval(process.argv[2]);" >> $1
+
+#execute it
+node $1 "$2"
+
+#delete last line from file
+tail -n 1 "$1" | wc -c | xargs -I {} truncate "$1" -s -{}
