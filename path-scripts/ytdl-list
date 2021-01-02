@@ -7,4 +7,4 @@
 # --------------------------------------------------------------------------------------------------------------
 
 
-~/permanent/public/bash/getUrl "$1" && youtube-dl -a "$1"; 
+~/permanent/public/path-scripts/getUrl "$1" && youtube-dl -a "$1"; 

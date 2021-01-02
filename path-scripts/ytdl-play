@@ -7,5 +7,5 @@
 
 
 echo "$@" > tmp.ytdl-play; 
-~/permanent/public/bash/getUrl tmp.ytdl-play;
+~/permanent/public/path-scripts/getUrl tmp.ytdl-play;
 mpv "$(< tmp.ytdl-play)" & rm tmp.ytdl-play;
