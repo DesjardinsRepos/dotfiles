@@ -8,3 +8,4 @@
 curl https://europe-west1-semi-umfrage.cloudfunctions.net/api/getEntries1 > data.json && prettier -w data.json
 less data.json
 echo entries: $(grep date data.json | wc -l)
+rm data.json

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Pulls a certain pdf Document and removes it after viewing.
+# --------------------------------------------------------------------------------------------------------------
+# Usage: ./v
+# --------------------------------------------------------------------------------------------------------------
+
+wget https://www.schleusingen-gymnasium.de/fileadmin/redakteure/ag_admingym/ag_vpo/v.pdf
+mv v.pdf ~/permanent/cache/v.pdf
+okular ~/permanent/cache/v.pdf && rm ~/permanent/cache/v.pdf

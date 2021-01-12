@@ -34,12 +34,13 @@ PS1='[\u@\h \W]\$ '
     alias chill='mpa https://www.youtube.com/watch?v=5qap5aO4i9A'
     alias gamechill='mpa https://www.youtube.com/watch?v=KI0MHwGzl6U'
     alias mpa='mpv --volume=50 --no-video --force-seekable=yes'
+    alias mpv='mpv --geometry=30%'
     #alias getSurvey='~/permanent/public/bash/getSurvey'
     #alias get='~/permanent/public/bash/get'
     #alias twitch='~/permanent/public/twitch'
     #alias execnode='~/permanent/public/bash/execnode'
     #alias combine-text-in-folder='~/permanent/public/bash/combine-text-in-folder'
-    #alias cl='~/permanent/public/bash/cl'
+    #alias cl='~/permanent/public/bash/cl'	
 
     convertpdf() { 
         for file in "$@"; do $(convert "$file" "${file:0:${#file}-4}.pdf"); done; 
