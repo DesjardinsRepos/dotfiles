@@ -17,6 +17,7 @@ PS1='[\u@\h \W]\$ '
     alias trash='trash-put'
     alias gofind='sudo find / -name'
     alias ls='ls --color=auto'
+    alias logout='qdbus org.kde.ksmserver /KSMServer logout 0 0 0'
     #alias burn='~/permanent/public/bash/burn'
 
 # exported scripts
