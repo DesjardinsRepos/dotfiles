@@ -1,12 +1,8 @@
 #!/usr/bin/env bash
-
-## Author  : Aditya Shakya
-## Mail    : adi1090x@gmail.com
-## Github  : @adi1090x
-## Twitter : @adi1090x
-
+#
+# stolen from github/adi1090x
+#
 # Available Styles
-# >> Created and tested on : rofi 1.6.0-1
 #
 # column_circle     column_square     column_rounded     column_alt
 # card_circle     card_square     card_rounded     card_alt
@@ -16,20 +12,12 @@
 # row_circle      row_square      row_rounded      row_alt
 
 theme="card_rounded"
-dir="$HOME/rofi/1080p/powermenu"
-
-# random colors
-#styles=($(ls -p --hide="colors.rasi" $dir/styles))
-#color="cocoa.rasi"
-
-# comment this line to disable random colors
-#sed -i -e "s/@import .*/@import \"$color\"/g" $dir/styles/colors.rasi
+dir="$HOME/permanent/public/rofi/1080p/powermenu"
 
 uptime=$(uptime -p | sed -e 's/up //g')
 
 rofi_command="rofi -theme $dir/$theme"
 
-# Options
 shutdown=""
 reboot=""
 lock=""

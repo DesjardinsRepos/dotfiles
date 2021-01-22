@@ -1,0 +1,137 @@
+# i3 config file (v4)
+#
+# Should you change your keyboard layout some time, delete this file and re-run i3-config-wizard(1).
+#
+
+set $mod Mod1
+set $win Mod4
+
+gaps inner 15 
+border_radius 3 
+default_border pixel 0
+
+# Font for window titles
+font pango:monospace 10
+#font pango:DejaVu Sans Mono 8
+
+exec feh --bg-scale --no-xinerama ~/permanent/public/media/i3wmbg-united-info.png
+exec xrandr --output HDMI-1 --rotate inverted 
+exec /usr/bin/compton
+
+bindsym $mod+x exec --no-startup-id ~/permanent/public/rofi/1080p/bin/powermenu 
+bindsym $mod+d exec --no-startup-id ~/permanent/public/rofi/1080p/bin/launcher_misc
+
+bindsym $mod+e move left
+bindsym $mod+r move right
+bindsym $mod+t move up
+bindsym $mod+v move down
+
+# lock the screen before suspend
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+# NetworkManager
+exec --no-startup-id nm-applet
+
+# Use pactl to adjust volume in PulseAudio.
+#set $refresh_i3status killall -SIGUSR1 i3status 
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status 
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status 
+#bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status 
+#bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec --no-startup-id gnome-terminal
+
+# kill focused window
+bindsym $mod+q kill
+
+# change focus --- working
+bindsym $mod+k focus left 
+bindsym $mod+m focus down 
+bindsym $mod+i focus up 
+bindsym $mod+l focus right
+
+# split in horizontal orientation --- not working or im using it wrong
+bindsym $mod+h split h
+
+# split in vertical orientation --- not workling or im using it wrong
+bindsym $mod+g split v
+
+# fullscreen --- working
+bindsym $mod+f fullscreen toggle
+
+# toggle tiling / floating --- not working, but not important for me
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows --- not working, but not important for me
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container --- working
+bindsym $mod+a focus parent
+
+# Define names for default workspaces --- working
+set $ws1 "1" 
+set $ws2 "2" 
+set $ws3 "3" 
+set $ws4 "4" 
+set $ws5 "5" 
+set $ws6 "6" 
+set $ws7 "7" 
+set $ws8 "8" 
+set $ws9 "9" 
+set $ws10 "10"
+
+# switch to workspace --- working
+bindsym $mod+1 workspace number $ws1 
+bindsym $mod+2 workspace number $ws2 
+bindsym $mod+3 workspace number $ws3 
+bindsym $mod+4 workspace number $ws4 
+bindsym $mod+5 workspace number $ws5 
+bindsym $mod+6 workspace number $ws6 
+bindsym $mod+7 workspace number $ws7 
+bindsym $mod+8 workspace number $ws8 
+bindsym $mod+9 workspace number $ws9 
+bindsym $mod+0 workspace number $ws10
+
+# move focused container to workspace --- working
+bindsym $win+1 move container to workspace number $ws1 
+bindsym $win+2 move container to workspace number $ws2 
+bindsym $win+3 move container to workspace number $ws3 
+bindsym $win+4 move container to workspace number $ws4 
+bindsym $win+5 move container to workspace number $ws5 
+bindsym $win+6 move container to workspace number $ws6 
+bindsym $win+7 move container to workspace number $ws7 
+bindsym $win+8 move container to workspace number $ws8 
+bindsym $win+9 move container to workspace number $ws9 
+bindsym $win+0 move container to workspace number $ws10
+
+# restart i3 --- working
+bindsym $win+r exec i3-msg restart
+
+# resize window --- working
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width. Pressing right will grow the window’s width. 
+        # Pressing up will shrink the window’s height. Pressing down will grow the window’s height.
+        bindsym k resize shrink width 10 px or 10 ppt 
+        bindsym i resize grow height 10 px or 10 ppt 
+        bindsym m resize shrink height 10 px or 10 ppt 
+        bindsym l resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt 
+        bindsym Down resize grow height 10 px or 10 ppt 
+        bindsym Up resize shrink height 10 px or 10 ppt 
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default" 
+        bindsym Escape mode "default" 
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+w mode "resize"

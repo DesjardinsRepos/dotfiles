@@ -33,9 +33,9 @@ PS1='[\u@\h \W]\$ '
     #alias ytdl-list='~/permanent/public/bash/ytdl-list'
     #alias ytdl-get-url-from-file='~/permanent/public/bash/getUrl "$@"'
     alias chill='mpa https://www.youtube.com/watch?v=5qap5aO4i9A'
-    alias gamechill='mpa https://www.youtube.com/watch?v=KI0MHwGzl6U'
+    alias gamechill='mpa https://www.youtube.com/watch?v=KI0MHwGzl6U --start=$(($RANDOM % 100 + 1))% --loop'
     alias mpa='mpv --volume=50 --no-video --force-seekable=yes'
-    alias mpv='mpv --geometry=30%'
+    alias mpv='mpv --geometry=30% --no-osc'
     #alias getSurvey='~/permanent/public/bash/getSurvey'
     #alias get='~/permanent/public/bash/get'
     #alias twitch='~/permanent/public/twitch'
@@ -67,7 +67,7 @@ PS1='[\u@\h \W]\$ '
     alias stopw='windscribe disconnect && sudo systemctl stop windscribe'
 
 
-neofetch --colors 4 4 7 4 7 7 --ascii_colors 12 4
+neofetch --colors 12 7 7 12 7 7 --ascii_colors 15 7
 
 export PATH="~/permanent/public/path-scripts/:$PATH"
 export NVM_DIR="$HOME/.nvm"

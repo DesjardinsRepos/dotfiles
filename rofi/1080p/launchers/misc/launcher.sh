@@ -13,7 +13,7 @@
 # column	row				row_center			screen			row_dock		row_dropdown
 
 theme="kde_krunner"
-dir="$HOME/rofi/1080p/launchers/misc"
+dir="$HOME/permanent/public/rofi/1080p/launchers/misc"
 
 # comment these lines to disable random style
 #themes=($(ls -p --hide="launcher.sh" $dir))
