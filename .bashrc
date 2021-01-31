@@ -18,6 +18,7 @@ PS1='[\u@\h \W]\$ '
     alias gofind='sudo find / -name'
     alias ls='ls --color=auto'
     alias logout='qdbus org.kde.ksmserver /KSMServer logout 0 0 0'
+    alias pacman-log='grep -i installed /var/log/pacman.log'
     #alias burn='~/permanent/public/bash/burn'
 
 # exported scripts
@@ -33,9 +34,12 @@ PS1='[\u@\h \W]\$ '
     #alias ytdl-list='~/permanent/public/bash/ytdl-list'
     #alias ytdl-get-url-from-file='~/permanent/public/bash/getUrl "$@"'
     alias chill='mpa https://www.youtube.com/watch?v=5qap5aO4i9A'
-    alias gamechill='mpa https://www.youtube.com/watch?v=KI0MHwGzl6U --start=$(($RANDOM % 100 + 1))% --loop'
     alias mpa='mpv --volume=50 --no-video --force-seekable=yes'
-    alias mpv='mpv --geometry=30% --no-osc'
+    alias mpv='mpv --no-osc'
+    alias notes='nano ~/permanent/private/data/notes-beta'
+    alias aquarium='mpv --volume=0 --no-osc --fs --video-zoom=0.115 https://www.youtube.com/watch?v=9Ej-0VRWmI8&t=212s'
+    alias mpv-zoom='mpv --no-osc --video-zoom=0.115'
+    alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
     #alias getSurvey='~/permanent/public/bash/getSurvey'
     #alias get='~/permanent/public/bash/get'
     #alias twitch='~/permanent/public/twitch'
@@ -67,7 +71,7 @@ PS1='[\u@\h \W]\$ '
     alias stopw='windscribe disconnect && sudo systemctl stop windscribe'
 
 
-neofetch --colors 12 7 7 12 7 7 --ascii_colors 15 7
+neofetch --colors 3 7 7 3 7 7 --ascii_colors 15 7
 
 export PATH="~/permanent/public/path-scripts/:$PATH"
 export NVM_DIR="$HOME/.nvm"
