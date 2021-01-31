@@ -40,6 +40,7 @@ PS1='[\u@\h \W]\$ '
     alias aquarium='mpv --volume=0 --no-osc --fs --video-zoom=0.115 https://www.youtube.com/watch?v=9Ej-0VRWmI8&t=212s'
     alias mpv-zoom='mpv --no-osc --video-zoom=0.115'
     alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+    alias last-journal='sudo journalctl -b-1'
     #alias getSurvey='~/permanent/public/bash/getSurvey'
     #alias get='~/permanent/public/bash/get'
     #alias twitch='~/permanent/public/twitch'
@@ -71,7 +72,7 @@ PS1='[\u@\h \W]\$ '
     alias stopw='windscribe disconnect && sudo systemctl stop windscribe'
 
 
-neofetch --colors 3 7 7 3 7 7 --ascii_colors 15 7
+neofetch --colors 3 7 7 3 7 7 --ascii_colors 15 7 --w3m permanent/public/media/dio.jpg --size 340 --xoffset 25
 
 export PATH="~/permanent/public/path-scripts/:$PATH"
 export NVM_DIR="$HOME/.nvm"
