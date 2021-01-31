@@ -5,6 +5,8 @@
 
 set $mod Mod1
 set $win Mod4
+set $media ~/permanent/public/media
+set $bash ~/permanent/public/bash
 
 gaps inner 15 
 border_radius 3 
@@ -14,16 +16,11 @@ default_border pixel 0
 font pango:monospace 10
 #font pango:DejaVu Sans Mono 8
 
-#exec feh --bg-scale --no-xinerama ~/permanent/public/media/i3wmbg-united-info.png
-#exec ~/xrandr-do
-#exec xrandr --output HDMI-1 --rotate inverted 
-exec /usr/bin/compton
+exec ~/xrandr-do && feh --bg-fill $media/bg-2.jpg --bg-fill $media/bg-1.jpg --bg-fill $media/bg-3.jpg
+exec --no-startup-id dunst
+exec --no-startup-id compton --config ~/permanent/public/compton.conf
 #exec discord --start-minimized
-#exec i3-msg 'workspace 3; exec discord'
-#exec i3-msg 'workspace 3; exec mailspring'
-exec i3-msg 'workspace 2; exec gnome-terminal -- ~/permanent/public/path-scripts/gamechill'
-exec i3-msg 'workspace 1; exec gnome-terminal -- asciiquarium'
-
+exec $bash/startup
 bindsym $mod+x exec --no-startup-id ~/permanent/public/rofi/1080p/bin/powermenu 
 bindsym $mod+d exec --no-startup-id ~/permanent/public/rofi/1080p/bin/launcher_misc
 
