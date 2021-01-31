@@ -1,0 +1,7 @@
+#!/bin/bash
+#
+# Adds an url for my gamechill script
+#  --------------------------------------------------------------------------------------------------------------
+file=~/permanent/public/media/gamechill-urls/$1
+
+touch $file && echo $2 > $file

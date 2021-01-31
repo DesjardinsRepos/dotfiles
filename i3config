@@ -14,9 +14,15 @@ default_border pixel 0
 font pango:monospace 10
 #font pango:DejaVu Sans Mono 8
 
-exec feh --bg-scale --no-xinerama ~/permanent/public/media/i3wmbg-united-info.png
-exec xrandr --output HDMI-1 --rotate inverted 
+#exec feh --bg-scale --no-xinerama ~/permanent/public/media/i3wmbg-united-info.png
+#exec ~/xrandr-do
+#exec xrandr --output HDMI-1 --rotate inverted 
 exec /usr/bin/compton
+#exec discord --start-minimized
+#exec i3-msg 'workspace 3; exec discord'
+#exec i3-msg 'workspace 3; exec mailspring'
+exec i3-msg 'workspace 2; exec gnome-terminal -- ~/permanent/public/path-scripts/gamechill'
+exec i3-msg 'workspace 1; exec gnome-terminal -- asciiquarium'
 
 bindsym $mod+x exec --no-startup-id ~/permanent/public/rofi/1080p/bin/powermenu 
 bindsym $mod+d exec --no-startup-id ~/permanent/public/rofi/1080p/bin/launcher_misc
@@ -135,3 +141,48 @@ mode "resize" {
 }
 
 bindsym $mod+w mode "resize"
+
+
+
+mode "mouse" {	# modified: https://www.reddit.com/r/i3wm/comments/3btki2/use_the_mouse_cursor_from_the_keyboard/
+
+	set $spd 20
+
+	bindsym d exec xdotool mousemove_relative -- -$spd 0
+	bindsym m exec xdotool mousemove_relative 0 $spd
+	bindsym i exec xdotool mousemove_relative -- 0 -$spd
+	bindsym f exec xdotool mousemove_relative $spd 0
+
+	# Left Click
+	bindsym g exec xdotool click 1
+
+	# Middle Click
+	bindsym h exec xdotool click 2
+
+	# Right Click
+	bindsym j exec xdotool click 3
+
+	# Left Click-and-drag
+	bindsym Shift+g exec xdotool mousedown 1
+
+	# Middle Click-and-drag 
+	bindsym Shift+h exec xdotool mousedown 2
+
+	# Right Click-and-drag
+	bindsym Shift+j exec xdotool mousedown 3
+
+	# Left Drag release
+	bindsym $mod+g exec xdotool mouseup 1
+
+	# Middle Drag release
+	bindsym $mod+h exec xdotool mouseup 2
+
+	# Right Drag release
+	bindsym $mod+j exec xdotool mouseup 3
+
+	# return
+	bindsym Escape mode "default"
+	bindsym $win+m mode "default"
+}
+
+bindsym $win+m mode "mouse"

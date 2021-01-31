@@ -1,0 +1,11 @@
+#!/bin/bash
+# 
+#  mpa's a random playlist at a random starting point, after that playing the rest randomly
+#  --------------------------------------------------------------------------------------------------------------
+
+ls ~/permanent/public/media/gamechill-urls |sort -R |tail -$N |while read file; do
+
+    url=$(cat ~/permanent/public/media/gamechill-urls/"$file")
+    echo Now playing: $file from $url:
+    mpv $url --volume=50 --no-video --force-seekable=yes --start=$(($RANDOM % 100 + 1))% --loop
+done

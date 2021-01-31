@@ -1,30 +1,23 @@
-/*
- *
- * Author  : Aditya Shakya
- * Mail    : adi1090x@gmail.com
- * Github  : @adi1090x
- * Twitter : @adi1090x
- *
- */
+/* stolen from github/adi1090x */
 
 configuration {
-	font:							"FantasqueSansMono Nerd Font 12";
+    font:			    "FantasqueSansMono Nerd Font 12";
     show-icons:                     false;
-	icon-theme: 					"Papirus";
+    icon-theme: 		    "Papirus";
     drun-display-format:            "{name}";
     disable-history:                false;
     fullscreen:                     false;
-	hide-scrollbar: 				true;
-	sidebar-mode: 					false;
+    hide-scrollbar: 		    true;
+    sidebar-mode: 		    false;
 }
 
 @import "styles/colors.rasi"
 
 window {
     transparency:                   "real";
-    background-color:               @background;
+    background-color:               #00000000;
     text-color:                     @foreground;
-    border-radius:                  0px;
+    border-radius:                  50px;
     height:                         28.5%;
     width:                          50%;
     location:                       center;
@@ -33,35 +26,35 @@ window {
 }
 
 prompt {
-    enabled: 						true;
+    enabled: 			    true;
     padding:                        0.5% 0.5% 0.5% 0%;
-	background-color: 				@background-alt;
-	text-color: 					@foreground;
+    background-color: 		    #00000000;
+    text-color: 		    @foreground;
 }
 
 textbox-prompt-colon {
-	expand: 						false;
-	str: 							"System |";
-	background-color: 				@background-alt;
-	text-color: 					@foreground;
+    expand: 		    	    false;
+    str: 			    "System |";
+    background-color:               #00000000;
+    text-color: 		    @foreground;
     padding:                        0.5% 0.5% 0.5% 0%;
 }
 
 inputbar {
-	children: 						[ textbox-prompt-colon, prompt ];
-    background-color:               @background-alt;
+    children: 			    [ textbox-prompt-colon, prompt ];
+    background-color:               #11111111;
     text-color:                     @foreground;
     expand:                         false;
-    border:                  		0.2% 0% 0.2% 0%;
+    border:                  	    0.2% 0% 0.2% 0%;
     border-radius:                  12px;
-    border-color:                  	@border;
+    border-color:                   @border;
     margin:                         0% 21.3% 0% 0%;
     padding:                        0.5%;
     position:                       center;
 }
 
 listview {
-    background-color:               @background;
+    background-color:               #00000000;
     margin:                         0% 0% 0% 0%;
     spacing:                        2%;
     cycle:                          true;
@@ -70,21 +63,21 @@ listview {
 }
 
 mainbox {
-    background-color:               @background;
+    background-color:               #00000000;
     children:                       [ inputbar, listview ];
     spacing:                        3.5%;
     padding:                        4% 0% 0% 2%;
 }
 
 element {
-    background-color:               @background-alt;
+    background-color:               #11111111;
     text-color:                     @foreground;
     orientation:                    horizontal;
     border-radius:                  25px;
 }
 
 element-text {
-	font:							"feather 32";
+    font:			    "feather 32";
     expand:                         true;
     horizontal-align:               0.5;
     vertical-align:                 0.5;
@@ -93,31 +86,32 @@ element-text {
 
 element normal.urgent,
 element alternate.urgent {
-    background-color:               @urgent;
+    background-color:               #00000000;
     text-color:                     @foreground;
     border-radius:                  0.2%;
 }
 
 element normal.active,
 element alternate.active {
-    background-color:               @background-alt;
+    background-color:               #00000000;
     text-color:                     @foreground;
 }
 
 element selected {
-    background-color:               @selected;
+    background-color:               #11111122;
     text-color:                     @foreground;
-    border:                  		0.2% 0% 0.2% 0%;
+    border:                  	    0.2% 0% 0.2% 0%;
     border-radius:                  25px;
-    border-color:                  	@border;
+    border-color:                   @border;
 }
 
 element selected.urgent {
-    background-color:               @urgent;
+    background-color:               #00000000;
     text-color:                     @foreground;
 }
 
 element selected.active {
-    background-color:               @background-alt;
+    background-color:               #00000000;
     color:                          @foreground;
 }
+
