@@ -17,7 +17,7 @@ font pango:monospace 10
 #font pango:DejaVu Sans Mono 8
 
 exec ~/xrandr-do && feh --bg-fill $media/bg-2.jpg --bg-fill $media/bg-1.jpg --bg-fill $media/bg-3.jpg
-exec --no-startup-id dunst
+exec --no-startup-id dunst -conf ~/.config/dunst/dunstrc
 exec --no-startup-id compton --config ~/permanent/public/compton.conf
 #exec discord --start-minimized
 exec $bash/startup
