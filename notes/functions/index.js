@@ -13,14 +13,14 @@ admin.initializeApp({
 const db = admin.firestore();
 const storage = admin.storage();
 const firebaseConfig = { 
-    apiKey: "AIzaSyADmS0dA7kLROFR0in1K-9m4KB9hOozYuQ", 
+    apiKey: " AIzaSyA0iz0HDXys7pSU_k-m1LBMOiXr1_jPpGM", 
     authDomain: "notes-synced.firebaseapp.com", 
     databaseURL: "https://notes-synced.firebaseio.com", 
     projectId: "notes-synced", 
     storageBucket: "notes-syncedo.appspot.com", 
-    messagingSenderId: "886652971045", 
-    appId: "1:886652971045:web:30a9a78a77d3c6ca4737cc", 
-    measurementId: "G-MX1GED61B5" 
+    messagingSenderId: "221507720871", 
+    appId: "1:221507720871:web:3de56f80c319d68a6f2d82", 
+    //measurementId: "G-MX1GED61B5" 
 };
 
 
