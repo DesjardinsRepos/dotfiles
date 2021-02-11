@@ -20,7 +20,7 @@ import axios from 'axios';
 
 import theme from './exports/theme';
 
-axios.defaults.baseURL = 'https://europe-west1-id-ynstagram.cloudfunctions.net/api'; // LLERZEICHEN!
+axios.defaults.baseURL = 'https://europe-west1-notes-synced.cloudfunctions.net/api'; // LLERZEICHEN!
 
 
 const token = localStorage.FBAuthToken;

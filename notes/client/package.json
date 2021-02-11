@@ -42,5 +42,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://europe-west1-id-ynstagram.cloudfunctions.net/api"
+  "proxy": "https://europe-west1-notes-synced.cloudfunctions.net/api"
 }
