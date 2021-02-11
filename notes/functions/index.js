@@ -20,7 +20,7 @@ const firebaseConfig = {
     storageBucket: "notes-syncedo.appspot.com", 
     messagingSenderId: "221507720871", 
     appId: "1:221507720871:web:3de56f80c319d68a6f2d82", 
-    //measurementId: "G-MX1GED61B5" 
+    measurementId: "G-BEFJVGV5KK" 
 };
 
 
