@@ -112,7 +112,7 @@ exports.uploadImage = (request, response) => { // using busboy from npm
             destination: `ProfilePictures/${imageFileName}`,
             metadata: {
                 metadata: {
-                    firebaseStorageDownloadTokens: Math.round(Math.random()*100000000000), // wozu jetzt mal ganz im ernst
+                    firebaseStorageDownloadTokens: Math.round(Math.random()*100000000000),
                     contentType: imageHolder.mimetype
                 }
             }

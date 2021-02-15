@@ -7,5 +7,5 @@ ls ~/permanent/public/media/gamechill-urls | sort -R | while read file; do
 
     url=$(cat ~/permanent/public/media/gamechill-urls/"$file")
     echo Now playing: $file from $url:
-    mpv $url --volume=50 --no-video --force-seekable=yes --start=$(($RANDOM % 100 + 1))%
+    mpv $url --volume=50 --no-video --force-seekable=yes --start=$(($RANDOM % 100 + 1))% $@
 done

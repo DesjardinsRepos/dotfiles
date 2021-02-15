@@ -12,37 +12,33 @@ admin.initializeApp({
 
 const db = admin.firestore();
 const storage = admin.storage();
-const firebaseConfig = { 
-    apiKey: " AIzaSyA0iz0HDXys7pSU_k-m1LBMOiXr1_jPpGM", 
-    authDomain: "notes-synced.firebaseapp.com", 
+const firebaseConfig = {
+    apiKey: "AIzaSyA0iz0HDXys7pSU_k-m1LBMOiXr1_jPpGM",
+    authDomain: "notes-synced.firebaseapp.com",
     databaseURL: "https://notes-synced.firebaseio.com", 
-    projectId: "notes-synced", 
-    storageBucket: "notes-syncedo.appspot.com", 
-    messagingSenderId: "221507720871", 
-    appId: "1:221507720871:web:3de56f80c319d68a6f2d82", 
-    measurementId: "G-BEFJVGV5KK" 
+    projectId: "notes-synced",
+    storageBucket: "notes-synced.appspot.com",
+    messagingSenderId: "221507720871",
+    appId: "1:221507720871:web:3de56f80c319d68a6f2d82",
+    measurementId: "G-BEFJVGV5KK"
 };
 
+firebase.initializeApp(firebaseConfig);
 
-//firebase.initializeApp(firebaseConfig);
+const cors = require('cors');
+app.use(cors());
 
-const isEmpty = (string) => {
+const isEmpty = str => str.trim() === '';
 
-    if (string.trim() === '') return true;
-    else return false;
-} 
-
-const isEmail = (email) => {
-
-    const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (email.match(emailRegEx)) return true; else return false;
-}
+const isEmail = email => email.match(
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+);
 
 const FBAuth = (request, response, next) => { //needs to be edited
 
     let idToken;
 
-    if (request.headers.authorization && request.headers.authorization.startsWith('Bearer ')) {
+    if(request.headers.authorization && request.headers.authorization.startsWith('Bearer ')) {
         idToken = request.headers.authorization.split('Bearer ')[1];
 
     } else {
@@ -57,7 +53,7 @@ const FBAuth = (request, response, next) => { //needs to be edited
         })
         .then(data => {
             request.user.handle = data.docs[0].data().handle; // data() extracts data from doc[]
-            request.user.image = data.docs[0].data().image;
+            request.user.image = data.docs[0].data().image; // why not do this in one line?
             request.user.notes = data.docs[0].data().notes;
             request.user.email = data.docs[0].data().email;
             return next();
@@ -68,42 +64,40 @@ const FBAuth = (request, response, next) => { //needs to be edited
         });
 }
 
-const cors = require('cors');
-const { request } = require('express');
-app.use(cors());
-
-// const pushData, checkForUpdate;
-
-
-const validateInput = (user, type) => {
+const validateInput = (user, type) => { // working
 
     let exceptions = {};
 
-    if (type === 'signUp') {
+    if(type === 'signUp') {
 
-        if (isEmpty(user.email)) exceptions.email = 'Email must not be empty.';
-        else if (!isEmail(user.email)) exceptions.email = 'Must be a valid email adress.';
+        isEmpty(user.email) ? exceptions.email = 'Email must not be empty.'
+        : !isEmail(user.email) ? exceptions.email = 'Must be a valid email adress.'
+        : 1
 
-        if (isEmpty(user.password)) exceptions.password = 'Password must not be empty.';
-        if (isEmpty(user.confirmPassword)) exceptions.confirmPassword = 'This field must not be empty.';
-        else if (user.password !== user.confirmPassword) exceptions.confirmPassword = 'Passwords are not the same.';
+        isEmpty(user.password) ? exceptions.password = 'Password must not be empty.'
+        : 1
 
+        isEmpty(user.confirmPassword) ? exceptions.confirmPassword = 'This field must not be empty.'
+        : user.password !== user.confirmPassword ? exceptions.confirmPassword = 'Passwords are not the same.'
+        : 1
 
-        if (isEmpty(user.handle)) exceptions.handle = 'Username must not be empty.';
+        isEmpty(user.handle) ? exceptions.handle = 'Username must not be empty.'
+        : 1
 
         return {
             exceptions,
-            valid: Object.keys(exceptions).length === 0 ? true : false
+            valid: Object.keys(exceptions).length === 0
         }
-    }
-    else if (type === 'signIn') {
+        
+    } else if(type === 'signIn') {
 
-        if(isEmpty(user.email)) exceptions.email = 'Email must not be empty.';
-        if(isEmpty(user.password)) exceptions.password = 'Password must not be empty.';
+        isEmpty(user.email) ? exceptions.email = 'Email must not be empty.'
+        : isEmpty(user.password) ? exceptions.password = 'Password must not be empty.'
+        : 1
 
         return {
             exceptions,
-            valid: Object.keys(exceptions).length === 0 ? true : false
+            valid: Object.keys(exceptions).length === 0
         }
     }
 }
@@ -126,7 +120,7 @@ const signUp = (request, response) => { // working
     db.doc(`/users/${newUser.handle}`).get()
     .then(doc => { 
 
-        if (doc.exists) {
+        if(doc.exists) {
             return response.status(400).json({handle: 'this handle is already taken'});
 
         } else {
@@ -151,7 +145,7 @@ const signUp = (request, response) => { // working
 
                     console.error(e);
 
-                    if (e.code === 'auth/email-already-in-use') {
+                    if(e.code === 'auth/email-already-in-use') {
                         return response.status(400).json({email: 'Email is already in use' });
 
                     } else {
@@ -187,93 +181,6 @@ const signIn = (request, response) => { // working
         });
 }
 
-const uploadImage = (request, response) => {
-
-    const BusBoy = require('busboy');
-    const path = require('path');
-    const os = require('os');
-    const fs = require('fs');
-
-    const busBoy = new BusBoy({ headers: request.headers });
-    
-    let imageFileName;
-    let imageHolder = {};
-
-    busBoy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-
-        if(!mimetype.includes('image')) return response.status(400).json({error: 'wrong file type submitted'});
-        
-        const imageExtension = filename.split('.')[filename.split('.').length - 1];
-        imageFileName = `${Math.round(Math.random()*100000000000)}.${imageExtension}`; 
-        //+ check if name is valid
-        const filepath = path.join(os.tmpdir(), imageFileName);
-
-        imageHolder = { filepath, mimetype };
-        file.pipe(fs.createWriteStream(filepath)); // create file
-    });
-
-    busBoy.on('finish', () => {        
-        storage.bucket().upload(imageHolder.filepath, {
-            resumable: false, 
-            destination: `ProfilePictures/${imageFileName}`,
-            metadata: {
-                metadata: {
-                    firebaseStorageDownloadTokens: Math.round(Math.random()*100000000000),
-                    contentType: imageHolder.mimetype
-                }
-            }
-        })
-        .then(() => {
-            console.log(imageFileName);
-            const image = `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/ProfilePictures%2F${imageFileName}?alt=media`;
-            console.error(image);
-            return db.doc(`/users/${request.user.handle}`).update({ image });
-        })
-        .then(() => {
-            return response.json({ message: 'Image uploaded succesfully' });
-        })
-        .catch(e => {
-            console.error(e);
-            return response.status(500).json({ error: e.code });
-        });
-    });
-
-    busBoy.end(request.rawBody);
-}
-
-const deleteAccount = (request, response) => {
-
-    var user = request.user;
-
-    user.delete().then(function() {
-    // User deleted.
-    }).catch(function(error) {
-    console.error(error)
-    });
-
-/*
-    document = db.doc(`/users/${request.user.handle}`);
-    document.get()
-        .then(doc => {
-            if(!doc.exists) {
-                return response.status(404).json({ error: 'User not found'});
-            }
-            else if(doc.data().handle !== request.user.handle) {
-                return response.status(403).json({ error: 'Unauthorized'});
-    
-            } else {
-
-                document.delete().then(() => {
-                    return response.json({ message: 'Account deleted succesfully'});
-                });
-            }
-        })
-        .catch(e => {
-            console.error(e);
-            return response.status(500).json({ error: e.code});
-        });*/
-}
-
 const pullData = (request, response) => { // working
 
     db.doc(`/users/${request.user.handle}`).get()
@@ -286,23 +193,72 @@ const pullData = (request, response) => { // working
         });
 }
 
-const update = (request, response) => {
-    db.doc(`/users/${request.user.handle}`).update({ notes: "new notes" })
-        .then(() => {
-            return response.status(200)
-        }).catch(e => {
-            console.error(e);
+const update = (request, response) => { // working
+
+    if(request.body.image) {
+        const busBoy = new require('busboy')({ headers: request.headers }); // geht das?
+        let image = {};
+    
+        busBoy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+            if(!mimetype.includes('image')) return response.status(400).json({error: 'wrong file type submitted'});
+            
+            const imageExtension = filename.split('.')[filename.split('.').length - 1];
+            image.filename = `${Math.round(Math.random()*100000000000)}.${imageExtension}`; 
+            
+            image.filepath = require('path').join(require('os').tmpdir(), image.filename);
+            image.mimetype = mimetype;
+
+            file.pipe(require('fs').createWriteStream(image.filepath)); // create file
         })
+        .catch(e => {
+            console.error(e);
+            return response.status(500).json({ error: e.code });
+        });
+    
+        busBoy.on('finish', () => {        
+            storage.bucket().upload(image.filepath, {
+                resumable: false, 
+                destination: `ProfilePictures/${image.filename}`,
+                metadata: {
+                    metadata: {
+                        firebaseStorageDownloadTokens: Math.round(Math.random()*100000000000),
+                        contentType: image.mimetype
+                    }
+                }
+            })
+            .then(() => {
+                return db.doc(`/users/${request.user.handle}`).update({ 
+                    image: `https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o/ProfilePictures%2F${image.filename}?alt=media` 
+                });
+            })
+            .then(() => {
+                if(!request.body.notes) return response.status(200).json({ message: "updated successfully" });
+            })
+            .catch(e => {
+                console.error(e);
+                return response.status(500).json({ error: e.code });
+            });
+        });
+    
+        busBoy.end(request.rawBody);
+    }
+
+    request.body.notes && db.doc(`/users/${request.user.handle}`)
+        .update({ 
+            notes: request.body.notes
+        })
+        .then(() => {
+            return response.status(200).json({ message: "updated successfully" });
+        })
+        .catch(e => {
+            console.error(e);
+            return response.status(500).json({ error: e.code });
+        });
 }
 
-app.post('/signup', signUp);
-app.post('/signin', signIn);
-app.delete('/deleteAccount/:accId', FBAuth, deleteAccount);
-
-//app.post('/checkForUpdate', FBAuth, checkForUpdate);
-app.post('/pullData', FBAuth, pullData);
-app.post('/update', FBAuth, update);
-app.post('/uploadImage', FBAuth, uploadImage);
-
+app.post('/signup', signUp); // working
+app.post('/signin', signIn); // working
+app.post('/pullData', FBAuth, pullData); // working
+app.post('/update', FBAuth, update); // working
 
 exports.api = functions.region('europe-west1').https.onRequest(app);

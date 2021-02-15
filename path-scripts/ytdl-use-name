@@ -7,6 +7,6 @@
 
 
 echo "$@" > tmp.ytdl-use-name;  
-bash /home/desjardins/permanent/public/bash/getUrl.sh tmp.ytdl-use-name;
+/home/desjardins/permanent/public/path-scripts/getUrl tmp.ytdl-use-name;
 youtube-dl -a tmp.ytdl-use-name;
 rm tmp.ytdl-use-name;
