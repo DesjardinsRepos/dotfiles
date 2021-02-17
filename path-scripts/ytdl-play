@@ -8,4 +8,4 @@
 
 echo "$@" > ~/permanent/cache/tmp.ytdl-play; 
 ~/permanent/public/path-scripts/getUrl ~/permanent/cache/tmp.ytdl-play;
-mpv --geometry=30% "$(< ~/permanent/cache/tmp.ytdl-play)" && rm ~/permanent/cache/tmp.ytdl-play;
+mpv --no-osc "$(< ~/permanent/cache/tmp.ytdl-play)" && rm ~/permanent/cache/tmp.ytdl-play;
