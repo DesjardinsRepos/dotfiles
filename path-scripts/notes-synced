@@ -1,0 +1,68 @@
+config=~/permanent/private/keys/notes-synced.login
+mail="fabian3@fabian.fabian"
+password="fabianfabian"
+cache=~/permanent/cache/notes-synced.tmp
+
+while [ ! $# -eq 0 ]
+do
+	case "$1" in
+		-d | --default)
+			echo "using notes with default script at $config"
+			$mail="fabian3@fabian.fabian"
+			$password="fabianfabian"
+		;;
+		-r | --read)
+			echo "using read-only mode"
+		;;
+		-p | --password)
+			$password=$2
+		;;
+		-m | --mail)
+			$mail=$2
+		;;        
+        esac
+        shift
+done
+
+data=$( \
+	jq -n \
+	--arg em "$mail" \
+	--arg pw "$password" \
+	'{email:$em, password:$pw}' \
+)
+
+token=$( \
+	curl \
+	--header "Content-Type: application/json" \
+	--request POST \
+	--data "$( \
+		jq -n \
+	        --arg em "$mail" \
+	        --arg pw "$password" \
+	        '{email:$em, password:$pw}' \
+	)" \
+	"https://europe-west1-notes-synced.cloudfunctions.net/api/signin" \
+	| jq -r '.token')
+
+notes=$( \
+	curl \
+	--header "Content-Type: application/json" \
+	--header "Authorization: Bearer $token" \
+	--request POST \
+	"https://europe-west1-notes-synced.cloudfunctions.net/api/pulldata" \
+)
+
+echo $notes
+
+rm $cache & touch $cache && \
+echo $(node -e "console.log('$notes'.replace(/[\\\]/g, '').replace(/\"\"\"/g, '\"'))") > $cache && nano $cache && notes=$(cat $cache) && echo $notes && \
+curl \
+	--header "Content-Type: application/json" \
+	--header "Authorization: Bearer $token" \
+	--request POST \
+	--data "$( \
+		jq -n \
+		--arg n "$notes" \
+		'{notes:$n}' \
+	)" \
+        "https://europe-west1-notes-synced.cloudfunctions.net/api/update"
