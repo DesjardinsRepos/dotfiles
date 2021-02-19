@@ -19,34 +19,21 @@ PS1='[\u@\h \W]\$ '
     alias ls='ls --color=auto'
     alias logout='qdbus org.kde.ksmserver /KSMServer logout 0 0 0'
     alias pacman-log='grep -i installed /var/log/pacman.log'
-    #alias burn='~/permanent/public/bash/burn'
 
 # exported scripts
 
     alias lsec='sudo ~/permanent/private/bash/.lsec'
-    #alias fixdiscord='~/permanent/public/bash/Mon2Cam'
 
 # personal
 
     alias ytdl='youtube-dl'
-    #alias ytdl-use-name='~/permanent/public/bash/ytdl-use-name'
-    #alias ytdl-play='~/permanent/public/bash/ytdl-play'
-    #alias ytdl-list='~/permanent/public/bash/ytdl-list'
-    #alias ytdl-get-url-from-file='~/permanent/public/bash/getUrl "$@"'
-    alias chill='mpa https://www.youtube.com/watch?v=5qap5aO4i9A'
-    alias mpa='mpv --volume=50 --no-video --force-seekable=yes'
+    alias mpa='mpv --quiet --volume=50 --no-video --force-seekable=yes'
     alias mpv='mpv --no-osc'
     alias notes='nano ~/permanent/private/data/notes-beta'
     alias aquarium='mpv --volume=0 --no-osc --fs --video-zoom=0.115 https://www.youtube.com/watch?v=9Ej-0VRWmI8&t=212s'
     alias mpv-zoom='mpv --no-osc --video-zoom=0.115'
     alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
     alias last-journal='sudo journalctl -b-1'
-    #alias getSurvey='~/permanent/public/bash/getSurvey'
-    #alias get='~/permanent/public/bash/get'
-    #alias twitch='~/permanent/public/twitch'
-    #alias execnode='~/permanent/public/bash/execnode'
-    #alias combine-text-in-folder='~/permanent/public/bash/combine-text-in-folder'
-    #alias cl='~/permanent/public/bash/cl'	
 
     convertpdf() { 
         for file in "$@"; do $(convert "$file" "${file:0:${#file}-4}.pdf"); done; 
