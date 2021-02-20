@@ -1,11 +1,9 @@
-const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const serviceAccount = require('./serviceAccountKey.json');
 const firebase = require('firebase');
 const app = require('express')();
 
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
+    credential: admin.credential.cert(require('./serviceAccountKey.json')),
     databaseURL: "https://notes-synced.firebaseio.com",
     storageBucket: 'notes-synced.appspot.com'
 });
@@ -25,8 +23,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-const cors = require('cors');
-app.use(cors());
+app.use(require('cors')());
 
 const isEmpty = str => str.trim() === '';
 
@@ -70,19 +67,25 @@ const validateInput = (user, type) => { // working
 
     if(type === 'signUp') {
 
-        isEmpty(user.email) ? exceptions.email = 'Email must not be empty.'
-        : !isEmail(user.email) ? exceptions.email = 'Must be a valid email adress.'
-        : 1
+        isEmpty(user.email) 
+            ? exceptions.email = 'Email must not be empty.'
+            : !isEmail(user.email) 
+                ? exceptions.email = 'Must be a valid email adress.'
+                : 1
 
-        isEmpty(user.password) ? exceptions.password = 'Password must not be empty.'
-        : 1
+        isEmpty(user.password) 
+            ? exceptions.password = 'Password must not be empty.'
+            : 1
 
-        isEmpty(user.confirmPassword) ? exceptions.confirmPassword = 'This field must not be empty.'
-        : user.password !== user.confirmPassword ? exceptions.confirmPassword = 'Passwords are not the same.'
-        : 1
+        isEmpty(user.confirmPassword) 
+            ? exceptions.confirmPassword = 'This field must not be empty.'
+            : user.password !== user.confirmPassword 
+                ? exceptions.confirmPassword = 'Passwords are not the same.'
+                : 1
 
-        isEmpty(user.handle) ? exceptions.handle = 'Username must not be empty.'
-        : 1
+        isEmpty(user.handle) 
+            ? exceptions.handle = 'Username must not be empty.'
+            : 1
 
         return {
             exceptions,
@@ -91,9 +94,11 @@ const validateInput = (user, type) => { // working
         
     } else if(type === 'signIn') {
 
-        isEmpty(user.email) ? exceptions.email = 'Email must not be empty.'
-        : isEmpty(user.password) ? exceptions.password = 'Password must not be empty.'
-        : 1
+        isEmpty(user.email) 
+            ? exceptions.email = 'Email must not be empty.'
+            : isEmpty(user.password) 
+                ? exceptions.password = 'Password must not be empty.'
+                : 1
 
         return {
             exceptions,
@@ -200,7 +205,7 @@ const update = (request, response) => { // working
         let image = {};
     
         busBoy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-            if(!mimetype.includes('image')) return response.status(400).json({error: 'wrong file type submitted'});
+            if(!mimetype.includes('image')) return response.status(400).json({ error: 'wrong file type submitted' });
             
             const imageExtension = filename.split('.')[filename.split('.').length - 1];
             image.filename = `${Math.round(Math.random()*100000000000)}.${imageExtension}`; 
@@ -261,4 +266,4 @@ app.post('/signin', signIn); // working
 app.post('/pullData', FBAuth, pullData); // working
 app.post('/update', FBAuth, update); // working
 
-exports.api = functions.region('europe-west1').https.onRequest(app);
+exports.api = require('firebase-functions').region('europe-west1').https.onRequest(app);
