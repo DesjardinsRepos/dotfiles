@@ -1,0 +1,6 @@
+#!/bin/bash
+# 
+# get the pid of a running GUI, stolen from https://askubuntu.com/questions/640096/how-do-i-check-which-terminal-i-am-using
+#  --------------------------------------------------------------------------------------------------------------
+
+xprop _NET_WM_PID WM_CLASS
