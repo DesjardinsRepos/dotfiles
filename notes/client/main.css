@@ -1,19 +1,186 @@
 
-  form {
-    border: 3px solid #004ba144;
+  :root {
+    --color-primary: #23272A;
+    --color-secondary: #262a2e;
+    --color-background: #2A2F33;
+    --color-highlight: #33383D;
+    --font-color-primary: rgb(212, 212, 212);
+    --font-color-link: rgb(87, 126, 255);
+  }
+
+  body {
+    background-color: var(--color-primary);
+    color: var(--font-color-primary);
+  }
+
+  a {
+    color: var(--font-color-link);
+  }
+
+  img {
+    opacity: 50%;
   }
   
+  /* home */
+
+  .image-interact {
+    width: 60px; 
+    height: 60px; 
+    cursor: pointer; 
+    margin: 15px 21px;
+  }
+
+  #form {
+    width: 100%; 
+    height: 64vh; 
+    background-color: var(--color-background); 
+    display: flex;
+  }
+
+  #left-form {
+    width: 7em; 
+    height: 64vh; 
+    background-color: var(--color-secondary);
+  }
+
+  #notes-container {
+    margin: 5px; 
+    width: 100%; 
+    height: 63vh; 
+    background-color: var(--color-background); 
+    border: 1px; 
+    border-color: var(--color-highlight); 
+    border-style: solid; 
+    overflow: auto;
+  }
+  
+  .notes-text {
+    display: none; 
+    margin: 10px; 
+    width: calc(100% - 28px); 
+    height: 100px;
+    resize: none;
+    border: 1px solid var(--color-highlight);
+    color: var(--font-color-primary);
+    background-color: var(--color-secondary);
+    border: 0;
+    padding: 5px;
+    font-size: medium;
+  }
+
+  .notes-div {
+    margin: 10px; 
+    border-bottom: 1px solid var(--color-highlight); 
+    width: calc(100%-20px); 
+    height: 50px; 
+    display: flex; 
+    background-color: var(--color-primary);
+  }
+
+  #notes-title {
+    width: 200px;
+    border: none;
+    border-bottom: 1px solid var(--color-highlight);
+    background-color: var(--color-secondary);
+    color: var(--font-color-primary);
+    margin-left: 9px;
+    font-size: medium;
+  }
+
+  #notes-expandImg {
+    width: 30px; 
+    height: 30px; 
+    cursor: pointer; 
+    margin: 10px;
+  }
+
+  #notes-deleteImg {
+    width: 24px; 
+    height: 24px; 
+    cursor: pointer; 
+    margin: 13px; 
+    margin-left: auto;
+  }
+
+  /* new note */
+
+  #new-bg {
+    background-color: var(--color-background);
+    height: 64vh;
+    display: none;
+    padding: 0;
+    border: 0;
+    width: 64vw;
+    z-index: 100;
+  }
+
+  #new-title {
+    width: 20vw;
+    border: none;
+    border-bottom: 1px solid var(--color-highlight);
+    background-color: var(--color-secondary);
+    color: var(--font-color-primary);
+    margin: 5vh 0 3vh 0;
+    font-size: medium;
+  }
+
+  #new-body {
+    margin: 10px; 
+    width: 30vw;
+    height: 35vh;
+    resize: none;
+    border: 1px solid var(--color-highlight);
+    color: var(--font-color-primary);
+    background-color: var(--color-secondary);
+    border: 0;
+    padding: 5px;
+    font-size: large;
+  }
+
+  #new-note-submit {
+    background-color: var(--color-primary);
+    border-bottom: 1px solid var(--color-highlight);
+    color: var(--font-color-primary);
+    color: white;
+    padding: 14px 20px;
+    margin: 20px 10px auto 10px;
+    border: none;
+    cursor: pointer;
+    width: 10vw;
+  }
+
+  #new-note-cancel {
+    background-color: var(--color-primary);
+    border-bottom: 1px solid var(--color-highlight);
+    color: var(--font-color-primary);
+    color: white;
+    padding: 14px 20px;
+    margin: 20px 10px auto 10px;
+    border: none;
+    cursor: pointer;
+    width: 10vw;
+  }
+
+  /* signin/ signup */
+  #form-signin {
+    border: 1px solid var(--color-highlight);
+  }
+
   input[type=text], input[type=password] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #002855;
+    border: 1px solid var(--color-highlight);
     box-sizing: border-box;
+    background-color: var(--color-secondary);
+    color: var(--font-color-primary);
   }
   
   button {
-    background-color: #004ba1;
+    background-color: var(--color-background);
+    border-bottom: 1px solid var(--color-highlight);
+    color: var(--font-color-primary);
     color: white;
     padding: 14px 20px;
     margin: 20px auto auto auto;
@@ -23,7 +190,7 @@
   }
 
   button:hover {
-    opacity: 0.8;
+    opacity: 0.5;
   }
 
   .redirect-signup {
@@ -32,6 +199,11 @@
       padding: auto;
   }
   
+  .ref-container {
+    padding: 16px;
+    background-color: var(--color-highlight);
+  }
+
   .container {
     padding: 16px;
   }

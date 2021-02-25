@@ -1,5 +1,11 @@
 #!/bin/bash
 
-# gets the volume of a given sink, stolen from https://unix.stackexchange.com/questions/132230/read-out-pulseaudio-volume-from-commandline-i-want-pactl-get-sink-volume
+# gets the volume of the 'combined' sink. partially stolen from https://unix.stackexchange.com/questions/132230/read-out-pulseaudio-volume-from-commandline-i-want-pactl-get-sink-volume
 # --------------------------------------------------------------------------------------------------------------
-pactl list sinks | grep '^[[:space:]]Volume:' |     head -n $(( $SINK + $1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,'
+
+pactl list sinks \
+| grep -A 7 'Name: combined' \
+| tail -n 1 \
+| sed -e 's,.* \([0-9][0-9]*\)%.*,\1,'
+
+# pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(pactl list sinks short | grep combined | cut -c1-1) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,'

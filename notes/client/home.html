@@ -6,50 +6,156 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body style="margin: 18vh 18vw">
-        <div style="width: 100%; height: 64vh; background-color: #eeeeee; display: flex">
-            <div style="width: 7em; height: 64vh; background-color: rgb(238, 238, 238);">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/OOjs_UI_icon_add.svg/1200px-OOjs_UI_icon_add.svg.png" 
-                    style="width: 60px; height: 60px; cursor: pointer; margin: 40px 21px 10px 21px;" onclick="add()">
-                <img src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_settings_48px-512.png" 
-                    style="width: 60px; height: 60px; cursor: pointer; margin: 10px 21px;" onclick="settings()">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/OOjs_UI_icon_logOut-ltr.svg/1024px-OOjs_UI_icon_logOut-ltr.svg.png" 
-                    style="width: 55px; height: 55px; cursor: pointer; margin: 12.5px 21px;" onclick="logout()">
+        <div id="form">
+            <dialog id="new-bg">
+                <center>
+                    <input type="text" id="new-title" placeholder="Title"></input><br>
+                    <textarea placeholder="Your text" id="new-body"></textarea><br>
+                    <button id="new-note-cancel" onclick="newNoteCancel()">Cancel</button>
+                    <button id="new-note-submit" onclick="newNoteAdd()">Add</button><br>
+                </center>
+            </dialog>
+
+            <div id="left-form">
+                <img src="https://img.icons8.com/pastel-glyph/256/ffffff/plus--v2.png" 
+                    style="margin: 40px 21px 10px 21px;" class="image-interact" onclick="add()" id="add">
+                <img src="https://img.icons8.com/android/192/ffffff/settings.png" 
+                    class="image-interact" onclick="settings()">
+                <img src="https://img.icons8.com/fluent-systems-regular/144/ffffff/exit.png" 
+                class="image-interact" onclick="logout()">
             </div>
-            <div style="margin: 5px; width: 100%; height: 63vh; background-color: rgb(212, 212, 212); border: 1px; border-color: rgb(109, 140, 182); 
-                border-style: solid; border-radius: 5px; overflow: auto;">
-                <div style="margin: 10px; border-bottom: 1px solid rgb(109, 140, 182); width: calc(100%-20px); height: 50px; display: flex; background-color: rgb(218, 218, 218);">
-                    <p style="margin-left: 5px;">Notes Title</p>
-                    <img src="https://www.meine-moebelmanufaktur.de/wp-content/uploads/icon-pfeil.png" 
-                        style="width: 30px; height: 30px; cursor: pointer; margin: 10px;" onclick="expand(1)">
-                    <img src="https://i.pinimg.com/originals/2c/3e/60/2c3e6019a6a08b739bb607a4fc17ed38.png" style="width: 30px; height: 30px; cursor: pointer; margin: 10px; margin-left: auto">
-                </div>
-                <textarea style="display: none; margin: 10px; border-radius: 5px; width: 97.8%; height: 100px;" id="notes-text-1">asfd</textarea>
-                <div style="margin: 10px; border-bottom: 1px solid rgb(109, 140, 182); width: calc(100%-20px); height: 50px; display: flex; background-color: rgb(218, 218, 218);">
-                    <p style="margin-left: 5px;">Notes Title</p>
-                    <img src="https://www.meine-moebelmanufaktur.de/wp-content/uploads/icon-pfeil.png" 
-                        style="width: 30px; height: 30px; cursor: pointer; margin: 10px;" onclick="expand(2)">
-                    <img src="https://i.pinimg.com/originals/2c/3e/60/2c3e6019a6a08b739bb607a4fc17ed38.png" style="width: 30px; height: 30px; cursor: pointer; margin: 10px; margin-left: auto">
-                </div>
-                <textarea style="display: none; margin: 10px; border-radius: 5px; width: 97.8%; height: 100px;" id="notes-text-2">asfd</textarea><div style="margin: 10px; border-bottom: 1px solid rgb(109, 140, 182); width: calc(100%-20px); height: 50px; display: flex; background-color: rgb(218, 218, 218);">
-                    <p style="margin-left: 5px;">Notes Title</p>
-                    <img src="https://www.meine-moebelmanufaktur.de/wp-content/uploads/icon-pfeil.png" 
-                        style="width: 30px; height: 30px; cursor: pointer; margin: 10px;" onclick="expand(3)">
-                    <img src="https://i.pinimg.com/originals/2c/3e/60/2c3e6019a6a08b739bb607a4fc17ed38.png" style="width: 30px; height: 30px; cursor: pointer; margin: 10px; margin-left: auto">
-                </div>
-                <textarea style="display: none; margin: 10px; border-radius: 5px; width: 97.8%; height: 100px;" id="notes-text-3">asfd</textarea>
+
+            <div id="notes-container">
+               
             </div>
         </div>
         <script>
             //add, settings, logout
+
+            const newNoteAdd = () => {
+                $('#new-bg')[0].style['display'] = 'none';
+
+                createNote(
+                    $('.notes-div').length,
+                    $('#new-body').val(),
+                    $('#new-title').val()
+                );
+
+                //$('#new-body').style['value'] = ''
+                //$('#new-title').value = ''
+            }
+
+            const newNoteCancel = () => {
+                $('#new-bg')[0].style['display'] = 'none';
+            }
+
+            const add = () => {
+                $('#new-bg')[0].style['display'] = "inline-block";
+            }
+
+
+            const logout = () => {
+                window.location.pathname = `${location.hostname}/signin.html`;
+                deleteAllCookies();
+            }
+
+            const createNote = (index, body, title) => {
+                let textarea = document.createElement("textarea");
+                textarea.innerHTML = body;
+                textarea.id = `notes-text-${index}`;
+                textarea.className = 'notes-text';
+                textarea.spellcheck = false;
+
+                let div = document.createElement("div");
+                div.id = `notes-div-${index}`;
+                div.className = 'notes-div';
+
+                let input = document.createElement("input");
+                input.type = "text";
+                input.value = title;
+                input.id = 'notes-title';
+
+                let expandImg = document.createElement("img");
+                expandImg.src = "https://img.icons8.com/material/144/ffffff/expand-arrow--v1.png";
+                expandImg.id = 'notes-expandImg';
+                expandImg.onclick = () => expand(index);
+
+                let deleteImg = document.createElement("img");
+                deleteImg.src = "https://img.icons8.com/android/144/ffffff/trash.png";
+                deleteImg.id = 'notes-deleteImg';
+                deleteImg.onclick = () => remove(index);
+
+                $('#notes-container').append(div);
+                $(`#notes-div-${index}`).append(input, expandImg, deleteImg)
+                $('#notes-container').append(textarea);
+            }
 
             const expand = n => {
                 document.getElementById(`notes-text-${n}`).style["display"] = $(`#notes-text-${n}`).css("display") === 'block' ? 'none' : 'block';
             }
 
             const remove = n => {
-                document.getElementById(`notes-container-${n}`).style["display"] = 'block';
+                $(`#notes-div-${n}`).remove();
+                $(`#notes-text-${n}`).remove();
                 // update storage
             }
+
+            let token = document.cookie
+                .split('; ')
+                .find(val => val.startsWith('token='))
+                .split('=')[1];
+
+            console.log(token);
+
+            $.ajax({
+                url: "https://europe-west1-notes-synced.cloudfunctions.net/api/pullData",
+                method: "POST",
+                dataType: "json",
+                body: "{}",
+                crossDomain: true,
+                contentType: "application/json; charset=utf-8",
+                cache: false,
+                beforeSend: xhr => {
+                    xhr.setRequestHeader("Authorization", `Bearer ${token}`)
+                },
+                success: data => {
+                    let a = JSON.parse(JSON.parse(data));
+
+                    for(let i = 0; i < a.length; i++) {
+                        createNote(
+                            $('.notes-div').length,
+                            a[i].body,
+                            a[i].title
+                        )
+                    }
+                },
+                error: (jqXHR, textStatus, error) => {
+                    console.error(error);
+                }
+            });
+
+            function deleteAllCookies() { // https://stackoverflow.com/questions/179355/clearing-all-cookies-with-javascript
+                var cookies = document.cookie.split(";");
+
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i];
+                    var eqPos = cookie.indexOf("=");
+                    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                }
+            }
+
+            
+            /*function savesnum(val) {
+                document.cookie = 'snum:'+val; //Set the cookie
+            }
+
+            function getsnum() {
+                var start = document.cookie.indexOf('snum:'); //Get the location of the cookie value
+                var stop = document.cookie.indexOf(';'); //Get the end of the cookie value
+
+                return document.cookie.substring(start+5, stop); //Return the value of the cookie (+5 because 'snum:' is 5 chars long)
+            }*/
         </script>
     </body>
 </html>

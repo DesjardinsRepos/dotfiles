@@ -3,35 +3,51 @@
     <head>
         <title>Sign up</title>
         <link rel="stylesheet" href="main.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body style="margin: 0">
         <center>
             <div style="height: 15vh;"></div>
-            <form style="max-width: 800px;">
+            <div style="max-width: 800px;" onsubmit="submit()" id="form-signin">
                 <div class="container">
                     <br/>
-                    <h1 style="font-family:verdana">SIGN UP</h1>
-                    <br/><br/><br/>
-                    <input type="text" placeholder="E-Mail" name="uname" style="margin: 0 10% 0 10%; width: 80%" required><br/>
-                    <br/>
-                    <input type="password" placeholder="Password" name="psw" style="margin: 0 10% 0 10%; width: 80%" required><br/>
-                    <br/>
-                    <input type="password" placeholder="Confirm Password" name="psw-confirm" style="margin: 0 10% 0 10%; width: 80%" required><br/>
-                    <br/>
-                    <input type="text" placeholder="Username" name="username" style="margin: 0 10% 0 10%; width: 80%" required>
-                    <br/><br/><br/>
-                    <center>
-                        <button type="submit">Sign up</button>
-                    </center>
-                    <br/><br/>
+                    <h1 style="font-family:verdana">SIGN UP</h1><br/><br/><br/>
+
+                    <input id="email" type="text" placeholder="E-Mail" style="margin: 0 10% 0 10%; width: 80%" required><br/><br/>
+                    
+                    <input id="password" type="password" placeholder="Password" style="margin: 0 10% 0 10%; width: 80%" required><br/><br/>
+
+                    <input id="password-confirm" type="password" placeholder="Confirm Password" style="margin: 0 10% 0 10%; width: 80%" required><br/><br/>
+
+                    <input id="username" type="text" placeholder="Username" style="margin: 0 10% 0 10%; width: 80%" required><br/><br/><br/>
+
+                    <center><button onclick="submit()">Sign up</button></center><br/><br/>
                 </div>
             
-                <div class="container" style="background-color:#004ba144">
+                <div class="ref-container">
                     <center>
                         <span class="redirect-signup">Already have an account? <a href="signin.html">Sign in</a></span>
                     </center>
                 </div>
-            </form> 
+            </div> 
         </center>
+        <script>
+            const submit = () => {
+                $.post("https://europe-west1-notes-synced.cloudfunctions.net/api/signup", {
+                    "email": $('#email').val(),
+                    "password": $('#password').val(),
+                    "confirmPassword": $('#password-confirm').val(),
+                    "handle": $('#username').val()
+                })
+                .done(data => {
+                    console.log(data);
+                    createCookie("token", data.token.toString(), 2);
+                    window.location.pathname = `${location.hostname}/home.html`;
+                })
+                .fail((xhr, status, error) => {
+                    console.log(`status ${status} xhr ${xhr} error ${error}`);
+                });
+            }
+        </script>
     </body>
 </html>
