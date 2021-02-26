@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Sign up</title>
-        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="main.css" type="text/css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body style="margin: 0">
@@ -21,7 +21,8 @@
 
                     <input id="username" type="text" placeholder="Username" style="margin: 0 10% 0 10%; width: 80%" required><br/><br/><br/>
 
-                    <center><button onclick="submit()">Sign up</button></center><br/><br/>
+                    <center><button onclick="submit()">Sign up</button></center><br/>
+                    <center><small id="hint" style="display: none; color: red;">asdfd</small></center><br/>
                 </div>
             
                 <div class="ref-container">
@@ -41,11 +42,19 @@
                 })
                 .done(data => {
                     console.log(data);
-                    createCookie("token", data.token.toString(), 2);
-                    window.location.pathname = `${location.hostname}/home.html`;
+                    document.cookie = `token=${data.token.toString()}; path=/`;
+                    window.location.href = "/home.html";
                 })
                 .fail((xhr, status, error) => {
-                    console.log(`status ${status} xhr ${xhr} error ${error}`);
+                    let err;
+                    for (var prop in xhr.responseText) {
+                        err = prop;
+                        break;
+                    }
+
+                    console.log(err)
+                    $("#hint")[0].style["display"] = "block";
+                    $('#hint')[0].innerHTML = `Error ${error} thrown: ${xhr.responseText[0]}`;
                 });
             }
         </script>

@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Sign in</title>
-        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="main.css" type="text/css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body style="margin: 0">
@@ -37,7 +37,7 @@
                 .done(data => {
                     console.log(data);
                     document.cookie = `token=${data.token.toString()}; path=/`;
-                    window.location.pathname = `${location.hostname}/home.html`;
+                    window.location.href = "/home.html";
                 })
                 .fail((xhr, status, error) => {
                     console.log(`status ${status} xhr ${xhr} error ${error}`);

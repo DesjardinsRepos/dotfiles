@@ -22,15 +22,17 @@
                 <img src="https://img.icons8.com/android/192/ffffff/settings.png" 
                     class="image-interact" onclick="settings()">
                 <img src="https://img.icons8.com/fluent-systems-regular/144/ffffff/exit.png" 
-                class="image-interact" onclick="logout()">
+                    class="image-interact" onclick="logout()">
             </div>
 
             <div id="notes-container">
-               
+               <div id="save-bg">
+                    <img id="save" src="https://img.icons8.com/ios-glyphs/60/ffffff/save--v1.png" 
+                        onclick="save()"/>
+                </div>
             </div>
         </div>
         <script>
-            //add, settings, logout
 
             const newNoteAdd = () => {
                 $('#new-bg')[0].style['display'] = 'none';
@@ -55,8 +57,8 @@
 
 
             const logout = () => {
-                window.location.pathname = `${location.hostname}/signin.html`;
-                deleteAllCookies();
+                window.location.href = "/signin.html";
+                //deleteAllCookies();
             }
 
             const createNote = (index, body, title) => {
@@ -73,6 +75,7 @@
                 let input = document.createElement("input");
                 input.type = "text";
                 input.value = title;
+                input.className = `notes-title-${index}`;
                 input.id = 'notes-title';
 
                 let expandImg = document.createElement("img");
@@ -97,7 +100,41 @@
             const remove = n => {
                 $(`#notes-div-${n}`).remove();
                 $(`#notes-text-${n}`).remove();
-                // update storage
+                for(let i = 0; i < list.length; i++) {
+                    if(list[i] = n) list[i] = -1;
+                }
+            }
+
+            const save = () => {
+                console.log(1)
+                for(let i = 0; i < list.length; i++) {
+                    if(list[i] >= 0) {
+                        list[i] = {
+                            "title": $(`.notes-title-${i}`).val(),
+                            "body": $(`#notes-text-${i}`).val()
+                        }
+                    }
+                }
+                console.log({notes:list});
+
+                $.ajax({
+                url: "https://europe-west1-notes-synced.cloudfunctions.net/api/update",
+                method: "POST",
+                dataType: "json",
+                data: JSON.stringify({ notes: list }),
+                crossDomain: true,
+                contentType: "application/json; charset=utf-8",
+                cache: false,
+                beforeSend: xhr => {
+                    xhr.setRequestHeader("Authorization", `Bearer ${token}`)
+                },
+                success: data => {
+                    console.log(data)
+                },
+                error: (jqXHR, textStatus, error) => {
+                    console.error(error);
+                }
+            });
             }
 
             let token = document.cookie
@@ -106,7 +143,7 @@
                 .split('=')[1];
 
             console.log(token);
-
+            let list = [];
             $.ajax({
                 url: "https://europe-west1-notes-synced.cloudfunctions.net/api/pullData",
                 method: "POST",
@@ -119,7 +156,7 @@
                     xhr.setRequestHeader("Authorization", `Bearer ${token}`)
                 },
                 success: data => {
-                    let a = JSON.parse(JSON.parse(data));
+                    let a = JSON.parse(data);
 
                     for(let i = 0; i < a.length; i++) {
                         createNote(
@@ -127,6 +164,7 @@
                             a[i].body,
                             a[i].title
                         )
+                        list.push(i);
                     }
                 },
                 error: (jqXHR, textStatus, error) => {
@@ -134,28 +172,6 @@
                 }
             });
 
-            function deleteAllCookies() { // https://stackoverflow.com/questions/179355/clearing-all-cookies-with-javascript
-                var cookies = document.cookie.split(";");
-
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = cookies[i];
-                    var eqPos = cookie.indexOf("=");
-                    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-                    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-                }
-            }
-
-            
-            /*function savesnum(val) {
-                document.cookie = 'snum:'+val; //Set the cookie
-            }
-
-            function getsnum() {
-                var start = document.cookie.indexOf('snum:'); //Get the location of the cookie value
-                var stop = document.cookie.indexOf(';'); //Get the end of the cookie value
-
-                return document.cookie.substring(start+5, stop); //Return the value of the cookie (+5 because 'snum:' is 5 chars long)
-            }*/
         </script>
     </body>
 </html>
