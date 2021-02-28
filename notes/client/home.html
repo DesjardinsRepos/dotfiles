@@ -42,9 +42,6 @@
                     $('#new-body').val(),
                     $('#new-title').val()
                 );
-
-                //$('#new-body').style['value'] = ''
-                //$('#new-title').value = ''
             }
 
             const newNoteCancel = () => {
@@ -58,7 +55,7 @@
 
             const logout = () => {
                 window.location.href = "/signin.html";
-                //deleteAllCookies();
+                document.cookie = "token=none; path=/";
             }
 
             const createNote = (index, body, title) => {
@@ -91,6 +88,8 @@
                 $('#notes-container').append(div);
                 $(`#notes-div-${index}`).append(input, expandImg, deleteImg)
                 $('#notes-container').append(textarea);
+
+                list.push(index);
             }
 
             const expand = n => {
@@ -107,21 +106,22 @@
 
             const save = () => {
                 console.log(1)
+                let newList = [];
                 for(let i = 0; i < list.length; i++) {
                     if(list[i] >= 0) {
-                        list[i] = {
-                            "title": $(`.notes-title-${i}`).val(),
-                            "body": $(`#notes-text-${i}`).val()
-                        }
+                        newList.push({
+                            title: $(`.notes-title-${i}`).val(),
+                            body: $(`#notes-text-${i}`).val()
+                        });
                     }
                 }
-                console.log({notes:list});
+                console.log(JSON.stringify({notes:newList}));
 
                 $.ajax({
                 url: "https://europe-west1-notes-synced.cloudfunctions.net/api/update",
                 method: "POST",
                 dataType: "json",
-                data: JSON.stringify({ notes: list }),
+                data: JSON.stringify({ notes: newList }),
                 crossDomain: true,
                 contentType: "application/json; charset=utf-8",
                 cache: false,
@@ -142,7 +142,6 @@
                 .find(val => val.startsWith('token='))
                 .split('=')[1];
 
-            console.log(token);
             let list = [];
             $.ajax({
                 url: "https://europe-west1-notes-synced.cloudfunctions.net/api/pullData",
@@ -164,14 +163,12 @@
                             a[i].body,
                             a[i].title
                         )
-                        list.push(i);
                     }
                 },
                 error: (jqXHR, textStatus, error) => {
                     console.error(error);
                 }
             });
-
         </script>
     </body>
 </html>

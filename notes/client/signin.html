@@ -8,7 +8,7 @@
     <body style="margin: 0">
         <center>
             <div style="height: 15vh;"></div>
-            <div style="max-width: 800px;" onsubmit="submit()" id="form-signin">
+            <div style="max-width: 800px;" id="form-signin">
                 <div class="container">
                     <br/>
                     <h1 style="font-family:verdana">SIGN IN</h1><br/><br/><br/>
@@ -17,7 +17,8 @@
 
                     <input id="password" type="password" placeholder="Password" style="margin: 0 10% 0 10%; width: 80%" required><br/><br/><br/>
 
-                    <center><button onclick="submit()">Sign in</button></center><br/><br/>
+                    <center><button onclick="submit()" id="submit">Sign in</button></center><br/><br/>
+                    <center><small id="hint" style="color: red;"></small></center><br/>
                 </div>
             
                 <div class="ref-container">
@@ -29,19 +30,23 @@
         </center>
         <script>
             const submit = () => {
-                console.log(1)
+                $('#submit').prop("disabled", true)[0].style['background-color'] = 'var(--color-secondary)';
+
                 $.post("https://europe-west1-notes-synced.cloudfunctions.net/api/signin", {
                     "email": $('#email').val(),
                     "password": $('#password').val()
                 })
                 .done(data => {
-                    console.log(data);
                     document.cookie = `token=${data.token.toString()}; path=/`;
                     window.location.href = "/home.html";
                 })
                 .fail((xhr, status, error) => {
-                    console.log(`status ${status} xhr ${xhr} error ${error}`);
+                    let err;
+                    for(let prop in JSON.parse(xhr.responseText)) { err = prop; break; }
+                    $('#hint')[0].innerHTML = `Error ${error} thrown: ${JSON.parse(xhr.responseText)[err]}`;
                 });
+
+                $('#submit').prop("disabled", false)[0].style['background-color'] = 'var(--color-background)';
             }
         </script>
     </body>

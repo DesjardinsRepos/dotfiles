@@ -8,7 +8,7 @@
     <body style="margin: 0">
         <center>
             <div style="height: 15vh;"></div>
-            <div style="max-width: 800px;" onsubmit="submit()" id="form-signin">
+            <div style="max-width: 800px;" id="form-signin">
                 <div class="container">
                     <br/>
                     <h1 style="font-family:verdana">SIGN UP</h1><br/><br/><br/>
@@ -21,8 +21,8 @@
 
                     <input id="username" type="text" placeholder="Username" style="margin: 0 10% 0 10%; width: 80%" required><br/><br/><br/>
 
-                    <center><button onclick="submit()">Sign up</button></center><br/>
-                    <center><small id="hint" style="display: none; color: red;">asdfd</small></center><br/>
+                    <center><button onclick="submit()" id="submit">Sign up</button></center><br/>
+                    <center><small id="hint" style="color: red;"></small></center><br/>
                 </div>
             
                 <div class="ref-container">
@@ -34,6 +34,8 @@
         </center>
         <script>
             const submit = () => {
+                $('#submit').prop("disabled", true)[0].style['background-color'] = 'var(--color-secondary)';
+
                 $.post("https://europe-west1-notes-synced.cloudfunctions.net/api/signup", {
                     "email": $('#email').val(),
                     "password": $('#password').val(),
@@ -47,15 +49,11 @@
                 })
                 .fail((xhr, status, error) => {
                     let err;
-                    for (var prop in xhr.responseText) {
-                        err = prop;
-                        break;
-                    }
-
-                    console.log(err)
-                    $("#hint")[0].style["display"] = "block";
-                    $('#hint')[0].innerHTML = `Error ${error} thrown: ${xhr.responseText[0]}`;
+                    for(let prop in JSON.parse(xhr.responseText)) { err = prop; break; }
+                    $('#hint')[0].innerHTML = `Error ${error} thrown: ${JSON.parse(xhr.responseText)[err]}`;
                 });
+
+                $('#submit').prop("disabled", false)[0].style['background-color'] = 'var(--color-background)';
             }
         </script>
     </body>

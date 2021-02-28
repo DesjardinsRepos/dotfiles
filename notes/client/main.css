@@ -19,6 +19,36 @@
 
   img {
     opacity: 50%;
+  }  
+
+  /* promo */
+
+  #promo { 
+    height: 100vh;
+    background: url('info.png') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+  #createAccount {
+    width: 350px;
+    position: absolute;
+    top: 700px;
+    left: 1350px;
+    border-radius: 5px;
+  }
+
+  #links {
+    position: absolute;
+    top: 90vh;
+    left: 17%;
+  }
+
+  #links a {
+    font-size: medium;
+    color: #414141;
   }
   
   /* home */
@@ -27,7 +57,7 @@
     float: right; 
     width: 30px; 
     height: 30px; 
-    margin: 10px 15px;
+    margin: 10px;
     cursor: pointer;
   }
 
@@ -206,6 +236,10 @@
 
   button:hover {
     opacity: 0.5;
+  }
+
+  img:hover {
+    opacity: 0.3;
   }
 
   .redirect-signup {
