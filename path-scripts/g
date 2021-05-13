@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Pulls a certain pdf Document and removes it after viewing.
+# --------------------------------------------------------------------------------------------------------------
+# Usage: ./g
+# --------------------------------------------------------------------------------------------------------------
+
+cache=~/permanent/cache
+
+wget https://www.schleusingen-gymnasium.de/lernpool/gesamtplan/ 
+mv index.html $cache/i.html && pandoc i.html -t latex -o g.pdf && okular ~/permanent/cache/g.pdf && rm ~/permanent/cache/g.pdf

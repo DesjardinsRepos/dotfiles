@@ -1,0 +1,1 @@
+sudo ethminer -P stratum://0x285187DE0E1067d1e25874691E40bE4A1d1980EA@eu1.ethermine.org:4444 -v 5
