@@ -1,0 +1,24 @@
+#!/bin/bash
+
+border=20000000
+													# wait for the hasrate to rise, dont terminate while starting
+sleep 60m \
+&& while true; do
+	if [[ $(pidof ethminer) == "" ]]; then								# if ethminer isnt active anymore, terminate
+		break
+	fi
+	
+	hashrate=$(											# get the 60min-average hashrate from ethermine.org API
+		curl api.ethermine.org/miner/0x285187DE0E1067d1e25874691E40bE4A1d1980EA/workers \
+		| python -m json.tool \
+		| grep -oP '(?<=currentHashrate": ).*?(?=,)'
+	)
+
+	if (( $(echo "$border > $hashrate" | bc -l) )); then 						# if hasrate lower than 20mh, restart
+		sudo /home/desjardins/permanent/public/path-scripts/root/ethmine -k \
+		&& sleep 15s \
+		&& sudo /home/desjardins/permanent/public/path-scripts/root/ethmine -s
+	fi
+
+	sleep 10m											# repeat every 10m
+done;

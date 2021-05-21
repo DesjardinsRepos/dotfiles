@@ -1,0 +1,52 @@
+#!/bin/bash
+
+state=/home/desjardins/permanent/cache/ethmine-state
+sLauncher="/home/desjardins/permanent/public/path-scripts/root/supervisor-launcher"
+ethmine=/home/desjardins/permanent/public/path-scripts/root/ethmine
+
+trap ctrl-c INT
+
+function ctrl-c() {
+	$ethmine -k
+}
+
+
+
+if [[ $@ == *--kill* || $@ == *-k* ]]; then
+	echo "0" > $state && killall ethminer eth-supervisor								# kill ethminer and the supervisor
+	
+	sleep 1s \
+	&& if [[ $(pidof ethminer) == "" ]]; then									# if it hasnt terminated yet, wait
+		echo "terminated succesfully" && exit
+	else
+		echo "ethminer has'nt terminated yet. Waiting..."
+		while [[ $(pidof ethminer) == "" ]]; do
+			sleep 1s && echo '#'
+		done \
+		&& echo "terminated succesfully" \
+		&& exit													# exit when ethminer terminated succesfully
+	fi
+else
+	if [[ $@ == *--start* || $@ == *-s* ]]; then
+		if [[ $(pgrep eth-supervisor) == "" ]]; then		
+			sudo $sLauncher &										# start the supervisor, if not already running		
+		fi
+
+		while true; do
+            		if [[ "$(cat $state)" == "0" ]]; then								# if ethminer should be killed, exit and reset
+                    		echo "1" > $state
+                    		break
+            		fi
+            		ethminer -P stratum://0x285187DE0E1067d1e25874691E40bE4A1d1980EA@eu1.ethermine.org:4444		# if not, begin to mine
+		done													# start again if ethminer crashes
+	else
+		echo													# if no option specified, print help text
+		echo "You specified no action when launching this script. What do you want to do?"
+		echo
+		echo "options:"
+		echo
+		echo "-s | --start"
+		echo "-k | --kill"
+		echo
+	fi
+fi

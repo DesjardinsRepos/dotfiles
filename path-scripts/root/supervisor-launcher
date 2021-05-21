@@ -1,0 +1,10 @@
+#!/bin/bash
+
+pid="/home/desjardins/permanent/public/path-scripts/root/eth-supervisor"
+supervisor="/home/desjardins/permanent/public/path-scripts/root/supervisor"
+
+if [[ $(pgrep "eth-supervisor") == "" ]]; then
+	rm -f "$pid"				# remove existsing symlink
+	ln -s "$supervisor" "$pid"		# create new one
+	exec "$pid"				# start the execution of the supervisor
+fi
