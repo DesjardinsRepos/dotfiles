@@ -55,6 +55,7 @@ space() { # echo n=$1 spaces
 
 submit() {
     notify-send \
+	-u normal \
 	-h string:x-canonical-private-synchronous:anything \
 	-a ":░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░" \
 	"$1"

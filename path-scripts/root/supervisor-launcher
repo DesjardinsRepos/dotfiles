@@ -1,10 +1,19 @@
 #!/bin/bash
 
-pid="/home/desjardins/permanent/public/path-scripts/root/eth-supervisor"
-supervisor="/home/desjardins/permanent/public/path-scripts/root/supervisor"
+pid="./eth-supervisor"
+supervisor="./supervisor"
+
+# supervisor-launcher starts supervisor with a symlink, 
+# so it can be found with pgrep
 
 if [[ $(pgrep "eth-supervisor") == "" ]]; then
-	rm -f "$pid"				# remove existsing symlink
-	ln -s "$supervisor" "$pid"		# create new one
-	exec "$pid"				# start the execution of the supervisor
+
+	# remove existsing symlink
+	rm -f "$pid"
+
+	# create new one
+	ln -s "$supervisor" "$pid"
+
+	# start the execution of the supervisor
+	exec "$pid"
 fi

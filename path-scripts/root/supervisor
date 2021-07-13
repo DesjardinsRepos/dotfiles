@@ -1,24 +1,35 @@
 #!/bin/bash
 
+# border is the rashrate below which the algorithm will restart
+# ethminer, to counter bugs like the all-shares-reject-bug
+
 border=20000000
-													# wait for the hasrate to rise, dont terminate while starting
+ethmine="./ethmine"
+
+# wait for the hasrate to rise, dont terminate while starting
+
 sleep 60m \
 && while true; do
-	if [[ $(pidof ethminer) == "" ]]; then								# if ethminer isnt active anymore, terminate
+
+	# if ethminer isnt active anymore, terminate
+	if [[ $(pidof ethminer) == "" ]]; then
 		break
 	fi
 	
-	hashrate=$(											# get the 60min-average hashrate from ethermine.org API
+	# get the 60min-average hashrate from ethermine.org API
+	hashrate=$(
 		curl api.ethermine.org/miner/0x285187DE0E1067d1e25874691E40bE4A1d1980EA/workers \
-		| python -m json.tool \
-		| grep -oP '(?<=currentHashrate": ).*?(?=,)'
+		| jq '.data' \
+		| jq '.[].currentHashrate'
 	)
 
-	if (( $(echo "$border > $hashrate" | bc -l) )); then 						# if hasrate lower than 20mh, restart
-		sudo /home/desjardins/permanent/public/path-scripts/root/ethmine -k \
+	# if hasrate lower than $border, restart
+	if (( $(echo "$border > $hashrate" | bc -l) )); then
+		sudo $ethmine -k \
 		&& sleep 15s \
-		&& sudo /home/desjardins/permanent/public/path-scripts/root/ethmine -s
+		&& sudo $ethmine -s
 	fi
 
-	sleep 10m											# repeat every 10m
-done;
+	# repeat every 10m
+	sleep 10m
+done
