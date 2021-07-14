@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# get root rights if running from user account
+
+[ "$UID" -eq 0 ] || exec sudo "$0" "$@"
+
+
 # the relative path to use for all scripts started by ethmine
 
 cd /home/desjardins/permanent/public/path-scripts/root
@@ -13,6 +18,7 @@ trap ctrl-c INT
 function ctrl-c() {
 	$ethmine -k
 }
+
 
 # --kill | -k
 # kill ethminer & supervisor and update state
@@ -29,6 +35,7 @@ if [[ $@ == *--kill* || $@ == *-k* ]]; then
 
 	echo "terminated successfully" && exit
 fi
+
 
 # --start | -s
 # start the supervisor, if not already running
@@ -47,15 +54,17 @@ if [[ $@ == *--start* || $@ == *-s* ]]; then
 		fi
 		ethminer -P stratum://0x285187DE0E1067d1e25874691E40bE4A1d1980EA@eu1.ethermine.org:4444
 	done
-else
-	# unrecognized or no option
-
-	echo
-	echo "You specified no action when launching this script. What do you want to do?"
-	echo
-	echo "options:"
-	echo
-	echo "-s | --start"
-	echo "-k | --kill"
-	echo
+	exit
 fi
+
+
+# unrecognized or no option
+
+echo
+echo "You specified no action when launching this script. What do you want to do?"
+echo
+echo "options:"
+echo
+echo "-s | --start"
+echo "-k | --kill"
+echo
