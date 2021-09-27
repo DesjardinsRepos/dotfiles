@@ -116,11 +116,13 @@ element {
 }
 
 element-icon {
+    background-color:				#00000000;
     size:                           64px;
     border:                         0px;
 }
 
 element-text {
+    background-color:				#00000000;
     expand:                         true;
     horizontal-align:               0.5;
     vertical-align:                 0.5;

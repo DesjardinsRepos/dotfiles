@@ -13,7 +13,7 @@
 
 theme="slate_full"
 
-dir="$HOME/.config/rofi/launchers/slate"
+dir="$HOME/permanent/public/rofi/1080p/launchers/slate"
 styles=($(ls -p --hide="colors.rasi" $dir/styles))
 color="${styles[$(( $RANDOM % 20 ))]}"
 

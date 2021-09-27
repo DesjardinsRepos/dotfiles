@@ -2,6 +2,6 @@
 
 # starts some things on login
 # --------------------------------------------------------------------------------------------------------------
-i3-msg 'workspace 1; exec discord & mailspring & kdeconnect-app' & sleep 4s \
-	&& i3-msg 'workspace 2; exec gnome-terminal -- ~/permanent/public/path-scripts/gamechill' \
-	&& i3-msg 'workspace 3; exec ~/permanent/public/path-scripts/aquarium'
+#i3-msg 'workspace 1; exec discord & mailspring -b & kdeconnect-app' & sleep 4s \
+#	&& i3-msg 'workspace 2; exec gnome-terminal -- ~/permanent/public/path-scripts/gamechill' \
+#	&& i3-msg 'workspace 3; exec ~/permanent/public/path-scripts/aquarium'

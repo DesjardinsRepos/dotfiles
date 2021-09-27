@@ -7,4 +7,4 @@
 # --------------------------------------------------------------------------------------------------------------
 
 
-~/permanent/public/path-scripts/getUrl "$1" && youtube-dl -a "$1"; 
+~/permanent/public/path-scripts/getUrl "$1" && youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4' -a "$1"; 

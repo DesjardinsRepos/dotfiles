@@ -105,6 +105,7 @@ element-text {
     horizontal-align:               0.5;
     vertical-align:                 0.5;
     margin:                         0.5% 0.5% -0.5% 0.5%;
+    background-color:				#00000000;
 }
 
 element selected {

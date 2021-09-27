@@ -8,5 +8,5 @@
 
 echo "$@" > tmp.ytdl-use-name;  
 /home/desjardins/permanent/public/path-scripts/getUrl tmp.ytdl-use-name;
-youtube-dl -a tmp.ytdl-use-name;
+youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4'  "$(cat tmp.ytdl-use-name)";
 rm tmp.ytdl-use-name;
