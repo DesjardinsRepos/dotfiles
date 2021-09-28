@@ -1,0 +1,225 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;==========================================================
+
+[colors]
+;background = ${xrdb:color0:#222}
+background = #222
+background-alt = #444
+;foreground = ${xrdb:color7:#222}
+foreground = #dfdfdf
+foreground-alt = #555
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+
+[bar/example]
+;monitor = ${env:MONITOR:HDMI-1}
+width = 100%
+height = 27
+;offset-x = 15
+;offset-y = 15
+;radius = 5
+fixed-center = true
+
+background = #aa2e2e2e
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+;border-left-size = 15
+;border-right-size = 15
+
+border-color = #00000000
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = fixed:pixelsize=10;1
+;font-1 = unifont:fontformat=truetype:size=10:antialias=false;0
+font-1 = siji;1
+font-2 = "Font Awesome 5 Brands,Font Awesome 5 Brands Regular:pixelsize=10";1
+font-3 = "Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid:pixelsize=10";1
+
+modules-left = i3 xwindow
+modules-center = date
+modules-right = spotify volTv volMain volPc volBt powermenu
+
+tray-position = right
+tray-padding = 2
+
+;wm-restack = i3
+;override-redirect = true
+
+;scroll-up = i3wm-wsnext
+;scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+
+
+
+; run nm-applet for wireless
+
+;          
+;skull 
+;
+
+
+[module/volMain]
+
+type = custom/script
+tail = true
+label = "%output%"
+exec = ~/.config/polybar/pavolume-new.sh --listen combined
+;pacmd list-sinks | grep -A 15 "name: <combined>" | grep 'volume:' | grep -E -v 'base volume:' | awk -F : '{print $3}' | grep -o -P '.{0,3}%'| sed s/.$// | tr -d ' '
+
+scroll-up = pactl set-sink-volume @DEFAULT_SINK@ +5%
+scroll-down = pactl set-sink-volume @DEFAULT_SINK@ -5%
+click-left = pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+
+[module/volPc]
+
+type = custom/script
+tail = true
+label = "%output%"
+exec = ~/.config/polybar/pavolume-new.sh --listen alsa_output.pci-0000_00_1f.3.analog-stereo
+scroll-up = pactl set-sink-volume alsa_output.pci-0000_00_1f.3.analog-stereo +5%
+scroll-down = pactl set-sink-volume alsa_output.pci-0000_00_1f.3.analog-stereo -5%
+click-left = pactl set-sink-mute alsa_output.pci-0000_00_1f.3.analog-stereo toggle
+
+
+[module/volTv]
+ 
+ type = custom/script
+ tail = true
+ label = "%output%"
+ exec = ~/.config/polybar/pavolume-new.sh --listen alsa_output.pci-0000_03_00.1.hdmi-stereo
+ scroll-up = pactl set-sink-volume alsa_output.pci-0000_03_00.1.hdmi-stereo +5%
+ scroll-down = pactl set-sink-volume alsa_output.pci-0000_03_00.1.hdmi-stereo -5%
+ click-left = pactl set-sink-mute alsa_output.pci-0000_03_00.1.hdmi-stereo toggle
+
+ 
+[module/volBt]
+
+ type = custom/script
+ tail = true
+ label = "%output%"
+ exec = ~/.config/polybar/pavolume-new.sh --listen bluez_sink.07_08_24_00_06_FC.a2dp_sink
+ scroll-up = pactl set-sink-volume bluez_sink.07_08_24_00_06_FC.a2dp_sink +5%
+ scroll-down = pactl set-sink-volume bluez_sink.07_08_24_00_06_FC.a2dp_sink -5%
+ click-left = pactl set-sink-mute bluez_sink.07_08_24_00_06_FC.a2dp_sink toggle
+
+
+[module/powermenu]
+
+type = custom/menu
+format-underline = #bbbbbb
+format-padding = 2
+
+label-open = ""
+label-close = ""
+label-separator = "  "
+
+menu-0-0 = ""
+menu-0-0-exec = i3-msg exit
+
+menu-0-1 = ""
+menu-0-1-exec = systemctl poweroff
+
+menu-0-2 =""
+menu-0-2-exec = systemctl reboot
+
+
+[module/xwindow]
+
+type = internal/xwindow
+format = <label>
+format-padding = 4
+;format-underline = #bbbbbb
+label = %title%
+label-maxlen = 50
+
+
+[module/spotify]
+
+type = custom/script
+exec = ~/.config/polybar/spotify.sh
+interval = 1
+format-padding = 2
+format-underline = #0f0
+format-prefix = "  "
+format-prefix-foreground = #0f0
+label = %output:0:150%
+
+
+[module/i3]
+
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+ws-icon-0 = 1;♚
+ws-icon-1 = 2;♛
+ws-icon-2 = 3;♜
+ws-icon-3 = 4;♝
+ws-icon-4 = 5;♞
+ws-icon-default = ♟
+
+; Only show workspaces on the same output as the bar
+;pin-workspaces = true
+
+label-mode-padding = 2
+
+label-focused = %index%
+label-focused-underline= #bbbbbb
+label-focused-padding = 2
+
+label-unfocused = %index%
+label-unfocused-padding = 2
+label-unfocused-foreground = #333333
+
+label-visible = %index%
+label-visible-foreground = #bbbbbb
+label-visible-background = ${self.label-focused-background}
+label-visible-padding = ${self.label-focused-padding}
+
+label-urgent = %index%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+
+[module/date]
+type = internal/date
+interval = 1
+
+date = " %H:%M"
+date-alt = " %d. %m. %Y"
+
+format-prefix = ""
+format-prefix-foreground = ${colors.foreground-alt}
+format-underline = #bbbbbb
+
+label = %date% %time%
+
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor | screen
+
+[global/wm]

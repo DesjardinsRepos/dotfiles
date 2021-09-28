@@ -1,0 +1,16 @@
+#!/bin/bash
+
+df=~/permanent/public/dotfiles
+cf=~/.config
+
+rm -r $df/*
+
+cp -r $cf/i3 $df/i3
+cp -r $cf/micro $df/micro
+cp -r $cf/ranger $df/ranger
+cp -r $cf/dunst $df/dunst
+cp -r $cf/mpv $df/mpv
+cp -r $cf/polybar $df/polybar
+cp -r $cf/compton $df/compton
+
+cp -r ~/.bashrc ~/permanent/public/bashrc
