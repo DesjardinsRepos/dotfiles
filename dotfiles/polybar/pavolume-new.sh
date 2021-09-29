@@ -1,4 +1,5 @@
 sink_name="$2"
+sink_number=""
 card_number=""
 
 function volUp {
@@ -13,9 +14,17 @@ function togmute {
 	pactl set-sink-mute $sink_name toggle
 }
 
+function getMute {
+	pactl get-sink-mute $sink_name | awk '{print $2}'
+}
+
+function getVolume {
+	pactl get-sink-volume $sink_name | head -n1 | awk '{print $5}'
+}
+
 function listen {
 	# once we get here, the sink definetely exists, so we can output its
-	# status once to get an initial state.
+	# status and wait for changes
 	
 	output
 
@@ -29,7 +38,7 @@ function listen {
 			output
 			
 		else 
-			if [[ $event =~ card ]]
+			if [[ $event =~ "card #$card_number" ]]
 			then
 				if [[ $(getIndexForce) == "" ]]
 				then
@@ -50,19 +59,13 @@ function output {
 	fi
 }
 
-function getMute {
-	pactl get-sink-mute $sink_name | awk '{print $2}'
-}
-
-function getVolume {
-	pactl get-sink-volume $sink_name | head -n1 | awk '{print $5}'
-}
-
 function getIndex {
 
 	# i should probably convert every use of this to getIndexForce
+
+	index=$(getIndexForce)
 	
-	if [[ $(getIndexForce) == "" ]]
+	if [[ $index == "" ]]
 	then
 		echo $(waitForSinkConnect)
 	else
@@ -71,7 +74,7 @@ function getIndex {
 }
 
 function getIndexForce {
-	echo $(pactl list sinks | grep -B 2 $sink_name | head -n1 | tr -dc '0-9')
+	pactl list sinks | grep -B 2 $sink_name | head -n1 | tr -dc '0-9'
 }
 
 function waitForSinkConnect {
