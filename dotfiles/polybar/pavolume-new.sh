@@ -22,6 +22,30 @@ function getVolume {
 	pactl get-sink-volume $sink_name | head -n1 | awk '{print $5}'
 }
 
+function getIndexForce {
+	pactl list sinks | grep -B 2 $sink_name | head -n1 | tr -dc '0-9'
+}
+
+function getIndex {
+
+	# i should probably convert every use of this to getIndexForce
+
+#	index=$(getIndexForce)
+#	
+#	if [[ $index == "" ]]
+#	then
+#		echo $(waitForSinkConnect)
+#	else
+#		echo $index
+#	fi
+
+	while [[ $(getIndexForce) == "" ]]
+	do
+		waitForSinkConnect
+	done && echo $(getIndexForce)
+	
+}
+
 function listen {
 	# once we get here, the sink definetely exists, so we can output its
 	# status and wait for changes
@@ -43,7 +67,7 @@ function listen {
 				if [[ $(getIndexForce) == "" ]]
 				then
 					echo ""
-					sink_number=$(waitForSinkConnect) && output
+					sink_number=$(getIndex) && output
 				fi
 			fi
 		fi
@@ -59,30 +83,11 @@ function output {
 	fi
 }
 
-function getIndex {
-
-	# i should probably convert every use of this to getIndexForce
-
-	index=$(getIndexForce)
-	
-	if [[ $index == "" ]]
-	then
-		echo $(waitForSinkConnect)
-	else
-		echo $index
-	fi
-}
-
-function getIndexForce {
-	pactl list sinks | grep -B 2 $sink_name | head -n1 | tr -dc '0-9'
-}
-
 function waitForSinkConnect {
 	expect <(cat <<'EOD'
 spawn pactl subscribe; expect card
 EOD
-) > /dev/null 2>&1  
-	echo $(getIndex)
+) > /dev/null 2>&1
 }
 
 case "$1" in
@@ -102,11 +107,11 @@ case "$1" in
 				icon_muted=""
 				icon_unmuted=""
 				;;
-			alsa_output.pci-0000_00_1f.3.analog-stereo)
+			alsa_output.pci-0000_09_00.4.analog-stereo)
 				icon_muted=""
 				icon_unmuted=""
 				;;
-			alsa_output.pci-0000_03_00.1.hdmi-stereo)
+			alsa_output.pci-0000_07_00.1.hdmi-stereo)
 				card_number="0"
 				icon_muted=""
 				icon_unmuted=""
