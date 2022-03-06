@@ -1,0 +1,16 @@
+#!/bin/bash
+# 
+#  
+#  --------------------------------------------------------------------------------------------------------------
+
+# sudo cryptsetup luksOpen /dev/sda2 encrypted
+# sudo mount /dev/mapper/encrypted /home/desjardins/data/encrypted
+# yuzu && gnome-terminal -- "sudo umount /home/desjardins/data/encrypted && sudo cryptsetup luksClose encrypted" & exit
+
+
+sudo cryptsetup luksOpen /dev/sda2 encrypted
+sudo mount /dev/mapper/encrypted /home/desjardins/data/encrypted
+yuzu 
+sudo umount /home/desjardins/data/encrypted 
+sudo cryptsetup luksClose encrypted
+exit

@@ -77,9 +77,9 @@ function listen {
 function output {
 	if [[ $(getMute) == "no" ]]
 	then
-		echo "$icon_unmuted $(getVolume)"
+		echo " $icon_unmuted  $(getVolume)"
 	else
-		echo "$icon_muted"
+		echo " $icon_muted"
 	fi
 }
 

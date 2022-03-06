@@ -30,7 +30,8 @@ font pango:monospace 10 #font pango:DejaVu Sans Mono 8
 floating_modifier $mod
 
 exec --no-startup-id \
-	~/xrandr-do \
+	xrandr --output DisplayPort-1 --auto --left-of DisplayPort-0 \
+	&& xrandr --output HDMI-A-0 --auto --left-of DisplayPort-1 \
 	&& feh --bg-fill $media/bg-2.jpg --bg-fill $media/bg-1.jpg --bg-fill $media/bg-3.jpg \
 	&& polybar example \
 	&  mailspring -b \
@@ -39,13 +40,13 @@ exec --no-startup-id \
 	&  nm-applet \
 	&  xset r rate 200 45 \
 	&  dunst -conf ~/.config/dunst/dunstrc \
-	&  compton --config ~/permanent/public/compton.conf \
+	&  compton --config ~/.config/compton/config \
 	&  /usr/lib/polkit-kde-authentication-agent-1 \
-	&  pactl set-sink-volume alsa_output.pci-0000_00_1f.3.analog-stereo 100% \
+	&  pactl set-sink-volume alsa_output.pci-0000_09_00.4.analog-stereo 100% \
+	&  pactl set-default-sink combined \
 	&  kdeconnect-cli --refresh \
-	&  autotiling
-#	&  xss-lock --transfer-sleep-lock -- i3lock --nofork \
-#	&  nm-applet
+	&  autotiling \
+	&  pactl set-default-sink combined
 	
 bindsym $mod+e \
 	move left
@@ -105,12 +106,12 @@ bindsym $mod+d \
 	exec --no-startup-id rofi -no-lazy-grab -show drun -modi drun -theme $i3/applauncher.rasi 
 
 bindsym XF86AudioRaiseVolume \
-	exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% \
+	exec --no-startup-id pactl set-sink-volume combined +5% \
 	&& $refresh_i3status \
 #	&& $path-scripts/volume-notify
 
 bindsym XF86AudioLowerVolume \
-	exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% \
+	exec --no-startup-id pactl set-sink-volume combined -5% \
 	&& $refresh_i3status \
 #	&& $path-scripts/volume-notify
 

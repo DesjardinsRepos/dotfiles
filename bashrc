@@ -27,7 +27,7 @@ PS1='[\u@\h \W]\$ '
 # personal
 
 	alias xampp='pkexec xampp-manager'
-    alias cssd='sudo vboxmanage startvm "complete-ssd" && exit'
+    alias win='sudo vboxmanage startvm "win-main" && exit'
     alias mine='sudo ethminer -P stratum://0x285187DE0E1067d1e25874691E40bE4A1d1980EA@eu1.ethermine.org:4444 -v 5 & while true; do sleep 1h; echo $(( 1 + $(cat ~/.mining-time) )) > ~/.mining-time; done'
     alias cat-recursively='find . -name "$1" -exec cat {} +'
     alias dunst-history='dunstctl history-pop'
