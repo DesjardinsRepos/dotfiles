@@ -330,7 +330,7 @@
     #icon = /path/to/icon
 
 [urgency_normal]
-    background = "#111111"
+    background = "#191e24"
 #"#285577"
     foreground = "#ffffff"
 #"#ffffff"

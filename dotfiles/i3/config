@@ -23,30 +23,42 @@ set $ws8 "8"
 set $ws9 "9" 
 set $ws10 "10"
 
-gaps inner 15 
-border_radius 4
+gaps inner 5 
+border_radius 7
 default_border pixel 0
 font pango:monospace 10 #font pango:DejaVu Sans Mono 8
 floating_modifier $mod
 
+for_window [title="Volume Control"] border pixel 0
+for_window [class="gta5.exe"] border pixel 0
+for_window [class="firefox"] border pixel 0
+for_window [class="Timeshift-gtk"] border pixel 0
+for_window [class="Robocraft.x86_64"] border pixel 0
+for_window [class="polkit-kde-authentication-agent-1"] border pixel 0
+for_window [class="Zenity"] border pixel 0
+
+workspace 1 output DP1
+workspace 2 output DP2
+workspace 3 output HDMI1
+
 exec --no-startup-id \
-	xrandr --output DisplayPort-1 --auto --left-of DisplayPort-0 \
-	&& xrandr --output HDMI-A-0 --auto --left-of DisplayPort-1 \
+	xrandr --output DisplayPort-2 --auto --left-of DisplayPort-1 \
+	&& xrandr --output HDMI-A-0 --auto --left-of DisplayPort-2 \
 	&& feh --bg-fill $media/bg-2.jpg --bg-fill $media/bg-1.jpg --bg-fill $media/bg-3.jpg \
+	&& source ~/.profile \
 	&& polybar example \
-	&  mailspring -b \
-	&  discord --start-minimized \
+	&  XDG_CURRENT_DESKTOP=13 mailspring -b \
+	&  XDG_CURRENT_DESKTOP=13 discord --start-minimized \
 	&  blueman-applet \
 	&  nm-applet \
 	&  xset r rate 200 45 \
 	&  dunst -conf ~/.config/dunst/dunstrc \
-	&  compton --config ~/.config/compton/config \
+	&  picom --config ~/.config/compton/config \
 	&  /usr/lib/polkit-kde-authentication-agent-1 \
 	&  pactl set-sink-volume alsa_output.pci-0000_09_00.4.analog-stereo 100% \
 	&  pactl set-default-sink combined \
 	&  kdeconnect-cli --refresh \
-	&  autotiling \
-	&  pactl set-default-sink combined
+	&  autotiling
 	
 bindsym $mod+e \
 	move left
@@ -87,7 +99,6 @@ bindsym $mod+f \
 bindsym $mod+space \
 	floating toggle
 
-# change focus between tiling / floating windows
 bindsym $mod+Shift+space \
 	focus mode_toggle
 
@@ -107,13 +118,11 @@ bindsym $mod+d \
 
 bindsym XF86AudioRaiseVolume \
 	exec --no-startup-id pactl set-sink-volume combined +5% \
-	&& $refresh_i3status \
-#	&& $path-scripts/volume-notify
+	&& $refresh_i3status
 
 bindsym XF86AudioLowerVolume \
 	exec --no-startup-id pactl set-sink-volume combined -5% \
-	&& $refresh_i3status \
-#	&& $path-scripts/volume-notify
+	&& $refresh_i3status
 
 bindsym $mod+Return \
 	exec --no-startup-id gnome-terminal
@@ -184,67 +193,4 @@ mode "resize" {
         
         bindsym $mod+r \
             mode "default"
-}
-
-mode "mouse" {
-    # modified: https://www.reddit.com/r/i3wm/comments/3btki2/use_the_mouse_cursor_from_the_keyboard/
-
-    set $spd 20
-
-    bindsym d \
-        exec xdotool mousemove_relative -- -$spd 0
-
-    bindsym m \
-        exec xdotool mousemove_relative 0 $spd
-
-    bindsym i \
-        exec xdotool mousemove_relative -- 0 -$spd
-
-    bindsym f \
-        exec xdotool mousemove_relative $spd 0
-
-        
-    # Left Click
-    bindsym g \
-        exec xdotool click 1
-
-    # Middle Click
-    bindsym h \
-        exec xdotool click 2
-
-    # Right Click
-    bindsym j \
-        exec xdotool click 3
-
-    # Left Click-and-drag
-    bindsym Shift+g \
-        exec xdotool mousedown 1
-
-    # Middle Click-and-drag 
-    bindsym Shift+h \
-        exec xdotool mousedown 2
-
-    # Right Click-and-drag
-    bindsym Shift+j \
-        exec xdotool mousedown 3
-
-    # Left Drag release
-    bindsym $mod+g \
-        exec xdotool mouseup 1
-
-    # Middle Drag release
-    bindsym $mod+h \
-        exec xdotool mouseup 2
-
-    # Right Drag release
-    bindsym $mod+j \
-        exec xdotool mouseup 3
-
-        
-    # return
-    bindsym Escape \
-        mode "default"
-
-    bindsym $win+m \
-        mode "default"
 }
