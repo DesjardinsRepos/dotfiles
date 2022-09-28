@@ -1,0 +1,14 @@
+[DEFAULT]
+BASEURL=http://all4os.ru/
+[InternetShortcut]
+URL=http://all4os.ru/
+IDList=
+IconFile=C:\Documents and Settings\Admin\Рабочий стол\Новая папка (4)\aveicon\logo.ico
+HotKey=0
+IconIndex=0
+[{000214A0-0000-0000-C000-000000000046}]
+Prop3=19,2
+[InternetShortcut.A]
+IconFile=C:\Documents and Settings\Admin\Рабочий стол\Новая папка (4)\aveicon\logo.ico
+[InternetShortcut.W]
+IconFile=C:+AFw-Documents and Settings+AFw-Admin+AFwEIAQwBDEEPgRHBDgEOQ- +BEEEQgQ+BDsAXAQdBD4EMgQwBE8- +BD8EMAQ/BDoEMA- (4)+AFw-aveicon+AFw-logo.ico

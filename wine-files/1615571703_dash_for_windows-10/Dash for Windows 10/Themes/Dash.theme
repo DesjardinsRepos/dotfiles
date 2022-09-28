@@ -1,0 +1,30 @@
+; Copyright © Microsoft Corp.
+
+[Theme]
+;
+DisplayName=Dash
+SetLogonBackground=0
+
+[Control Panel\Desktop]
+Wallpaper=%SystemRoot%\resources\themes\Dash\1.jpg
+TileWallpaper=0
+WallpaperStyle=10
+Pattern=
+
+[VisualStyles]
+Path=%SystemRoot%\resources\themes\Dash\Dash.msstyles
+ColorStyle=NormalColor
+Size=NormalSize
+ColorizationColor=0XFF363D43
+AutoColorization=0
+HighContrast=
+
+[boot]
+SCRNSAVE.EXE=
+
+[MasterThemeSelector]
+MTSM=RJSPBS
+
+[Sounds]
+; IDS_SCHEME_DEFAULT
+SchemeName=@%SystemRoot%\System32\mmres.dll,-800

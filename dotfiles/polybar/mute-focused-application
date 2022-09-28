@@ -1,0 +1,49 @@
+#!/bin/sh
+pid=0
+input=0
+
+function init {
+	pid=$(xprop -id $(xdotool getwindowfocus) | grep "_NET_WM_PID" | cut -d = -f2);
+	input=$(pacmd list-sink-inputs | grep $pid -B 21 | grep index | cut -d : -f2);
+}
+
+function initNew {
+	pid=$(xprop _NET_WM_PID | cut -d = -f2)
+	input=$(pacmd list-sink-inputs | grep $pid -B 21 | grep index | cut -d : -f2);
+}
+
+function togMute {
+	echo a
+}
+
+function getMute {
+	echo $pid
+	echo $input
+}
+
+function muteWindow {
+	pid=$(xprop _NET_WM_PID | cut -d = -f2)
+}
+
+
+
+
+
+case "$1" in
+    --getMute)
+    	init
+        getMute
+        ;;
+    --togMute)
+    	init
+        togMute
+        ;;
+    --muteWindow)
+    	initNew
+    	muteWindow
+    	;;
+    *)
+    	init
+        getMute
+        ;;
+esac

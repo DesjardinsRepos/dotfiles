@@ -1,0 +1,17 @@
+1. Copy your old ExplorerFrame.dll from your System32 folder to your desktop.
+
+2. Open it using Resource Hacker.  Replace Bitmap 288 with the included 288.bmp and save.
+
+3. Take ownership of the original ExplorerFrame.dll from your System32 folder.
+
+4. Rename it to ExplorerFrame.dll.old
+
+5. Copy the modified ExplorerFrame.dll from your desktop and put it into your System32 folder.
+
+6. Restart Explorer and there you have it.
+
+7. To revert back replace with the original ExplorerFrame.dll.old to get the glyphs.
+
+Thanks,
+Jamie
+

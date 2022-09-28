@@ -1,3 +1,5 @@
+#!/bin/sh
+
 config=~/permanent/private/keys/notes-synced.login
 mail="fabian3@fabian.fabian"
 password="fabianfabian"
